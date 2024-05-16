@@ -1,12 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using Elysium.Server.Core.Models;
+using Elysium.Server.Core.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-//builder.Services.AddDbContext<Context>(opt => opt.UseInMemoryDatabase("Apples"));
+builder.Services.AddDbContext<ApplicationContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ApplicationContext")
+    )
+);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

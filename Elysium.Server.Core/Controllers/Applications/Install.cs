@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Elysium.Server.Core.Controllers.Applications
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/applications/[controller]")]
     [ApiController]
     public class Install(ILogger<Install> logger) : ControllerBase
     {
