@@ -9,7 +9,6 @@ namespace Elysium.Server.Core.Controllers
     {
         // GET: Applications
         public async Task<IActionResult> Index() => View(await context.Applications.ToListAsync());
-        
 
         // GET: Applications/Details/5
         public async Task<IActionResult> Details(int? id)

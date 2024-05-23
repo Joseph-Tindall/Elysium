@@ -17,4 +17,32 @@
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Controllers\Conditions\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Conditions\Scripts\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Conditions\Scripts\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Conditions\Scripts\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Conditions\Scripts\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Conditions\Scripts\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Conditions\Scripts\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Conditions\Scripts\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Conditions\Scripts\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Conditions\Scripts\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Conditions\Scripts\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Scripts\Create.cshtml" />
+      <AdditionalFiles Include="Views\Scripts\Delete.cshtml" />
+      <AdditionalFiles Include="Views\Scripts\Details.cshtml" />
+      <AdditionalFiles Include="Views\Scripts\Edit.cshtml" />
+      <AdditionalFiles Include="Views\Scripts\Index.cshtml" />
+    </ItemGroup>
+
 </Project>
