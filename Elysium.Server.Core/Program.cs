@@ -3,12 +3,23 @@ using Elysium.Server.Core.Data;
 using Elysium.Server.Core.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CoreDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    options.MaxAge = TimeSpan.FromDays(60);
+    
+    options.ExcludedHosts.Add("aethervale.com");
+    options.ExcludedHosts.Add("www.aethervale.com");
+    
+    options.ExcludedHosts.Add("aethervale.dev");
+    options.ExcludedHosts.Add("www.aethervale.dev");
 });
 
 var app = builder.Build();
@@ -20,23 +31,18 @@ using (var scope = app.Services.CreateScope())
     Seed.Initialize(services);
 }
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 app.Run();
