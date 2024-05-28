@@ -4,8 +4,28 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Offline Layout File</title>
+    <link rel="stylesheet" href="../../wwwroot/css/site.css" asp-append-version="true"/>
 </head>
 <body>
-    Hello world
+    <elysium-app>
+        <nav-bar id="nav-bar" class="" slot="nav-bar" role="navigation">
+            <div class="left-content">
+                Left
+            </div>
+            <div class="center-content">
+                Center
+            </div>
+            <div class="right-content">
+                Right
+            </div>
+        </nav-bar>
+        <content-guide id="nav-guide" slot="content-guide" class="">
+            Left bar
+        </content-guide>
+        <main>
+            Main content
+        </main>
+        <br/>
+    </elysium-app>
 </body>
 </html>

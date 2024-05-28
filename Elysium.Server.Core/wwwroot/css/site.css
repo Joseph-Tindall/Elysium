@@ -1,5 +1,44 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+canvas, caption, center, cite, code, dd, del, dfn, div, dl, dt, em, embed, fieldset, font, form, h1, h2, h3, h4, h5, h6, hr, i, iframe, img, ins, kbd, label, legend, li, menu, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
 html {
   font-size: 14px;
+  position: relative;
+  background-color: lightgray;
+}
+
+html, body {
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,15 +47,65 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.left-content {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.center-content {
+  right: 0;
+  width: 100%;
+  display: flex;
+  flex-shrink: 1;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-body {
-  margin-bottom: 60px;
+.right-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+elysium-app {
+  display: block;
+  min-height: 100vh;
+  
+  --primary-background-color: var(--dark-theme-background-color);
+  --primary-text-color: var(--dark-theme-text-color);
+  
+  --light-theme-background-color: #fff;
+  --light-theme-text-color: #212121;
+  --dark-theme-background-color: #2b2b2b;
+  --dark-theme-text-color: #fff;
+  
+  --nav-bar-height: 48px;
+  --content-guide-width: var(--nav-bar-height);
+  
+  padding-top: var(--nav-bar-height);
+  padding-left: var(--content-guide-width);
+  background-color: var(--primary-background-color);
+}
+
+nav-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-bar-height);
+  justify-content: flex-start;
+  padding: 0;
+  background-color: lightcoral;
+}
+
+content-guide {
+  display: flex;
+  position: fixed;
+  left: 0;
+  height: 100vh;
+  width: var(--content-guide-width);
+  justify-content: flex-start;
+  background-color: lightgreen;
 }
