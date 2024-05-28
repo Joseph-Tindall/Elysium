@@ -6,9 +6,9 @@ This agreement contains a binding arbitration provision that requires the resolu
 
 If you are receiving the software on behalf of a legal entity, you represent and warrant that you have the actual authority to agree to the terms and conditions of this agreement on behalf of such entity.
 
-                    “Commons Clause” License Condition
-                                Version 1.0
-                        https://commonsclause.com/
+                                             “Commons Clause” License Condition
+                                                         Version 1.0
+                                                 https://commonsclause.com/
 
 The Software is provided to you by the Licensor under the License, as defined below, subject to the following condition.
 
@@ -24,9 +24,9 @@ For purposes of the foregoing, “Sell” means practicing any or all of the rig
 
 ---------------------------------------------------------------------
 
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
+                                                          Apache License
+                                                    Version 2.0, January 2004
+                                                 http://www.apache.org/licenses/
 
 TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
