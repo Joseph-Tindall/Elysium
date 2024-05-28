@@ -91,12 +91,9 @@ elysium-app {
 nav-bar {
   display: flex;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  inset: 0 0 auto 0;
   height: var(--nav-bar-height);
   justify-content: flex-start;
-  padding: 0;
   background-color: lightcoral;
 }
 
@@ -108,4 +105,30 @@ content-guide {
   width: var(--content-guide-width);
   justify-content: flex-start;
   background-color: lightgreen;
+}
+
+content-guide > [role="button"] {
+  --guide-padding: 2px;
+  
+  padding: var(--guide-padding);
+  display: block;
+  height: fit-content;
+  width: var(--content-guide-width);
+  background: lightsteelblue;
+}
+
+content-guide .guide-icon {
+  --symbol-label-space: calc((var(--content-guide-width) - var(--guide-padding)) * 0.25);
+  --symbol-label-width: calc(var(--content-guide-width) - var(--symbol-label-space));
+  --symbol-label-height: 32px;
+  
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin: 0 auto 4px auto;
+  border-radius: calc(var(--symbol-label-height) / 2);
+  width: var(--symbol-label-width);
+  height: var(--symbol-label-height);
+  background-color: lightgoldenrodyellow;
+  transition: font-variation-settings 0.2s cubic-bezier(0.2, 0, 0, 1);
 }

@@ -8,7 +8,7 @@
 </head>
 <body>
     <elysium-app>
-        <nav-bar id="nav-bar" class="" slot="nav-bar" role="navigation">
+        <nav-bar id="nav-bar" slot="nav-bar" role="navigation">
             <div class="left-content">
                 Left
             </div>
@@ -20,7 +20,10 @@
             </div>
         </nav-bar>
         <content-guide id="nav-guide" slot="content-guide" class="">
-            Left bar
+            <a class="section-link" aria-expanded="false" aria-label="Logs" role="button">
+                <span class="guide-icon"></span>
+                <span class="guide-label">Logs</span>
+            </a>
         </content-guide>
         <main>
             Main content
