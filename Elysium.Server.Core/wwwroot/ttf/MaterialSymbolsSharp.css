@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Material Symbols Sharp';
+  font-weight: 100 700;
+  src: url(MaterialSymbolsSharp-VariableFont_FILL,GRAD,opsz,wght.ttf) format('truetype-variations');
+}
+
+.material-symbols-sharp {
+  font-family: 'Material Symbols Sharp';
+}

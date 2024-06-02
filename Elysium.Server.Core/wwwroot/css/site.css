@@ -80,7 +80,7 @@ elysium-app {
   --dark-theme-background-color: #2b2b2b;
   --dark-theme-text-color: #fff;
   
-  --nav-bar-height: 48px;
+  --nav-bar-height: 64px;
   --content-guide-width: var(--nav-bar-height);
   
   padding-top: var(--nav-bar-height);

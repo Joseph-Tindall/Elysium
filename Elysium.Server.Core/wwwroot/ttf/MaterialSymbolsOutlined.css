@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-weight: 100 700;
+  src: url(MaterialSymbolsOutlined-VariableFont_FILL,GRAD,opsz,wght.ttf) format('truetype-variations');
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+}

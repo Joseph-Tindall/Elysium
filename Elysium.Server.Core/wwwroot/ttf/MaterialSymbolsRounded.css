@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-weight: 100 700;
+  src: url(MaterialSymbolsRounded-VariableFont_FILL,GRAD,opsz,wght.ttf) format('truetype-variations');
+}
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+}

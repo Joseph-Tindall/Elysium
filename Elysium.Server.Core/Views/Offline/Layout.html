@@ -4,6 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Offline Layout File</title>
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> -->
+    <link rel="stylesheet" href="../../wwwroot/ttf/MaterialSymbols.css" asp-append-version="true"/>
     <link rel="stylesheet" href="../../wwwroot/css/site.css" asp-append-version="true"/>
 </head>
 <body>
@@ -21,7 +23,11 @@
         </nav-bar>
         <content-guide id="nav-guide" slot="content-guide" class="">
             <a class="section-link" aria-expanded="false" aria-label="Logs" role="button">
-                <span class="guide-icon"></span>
+                <span class="guide-icon">
+                    <span class="material-symbols-rounded">
+                        arrow_forward_ios
+                    </span>
+                </span>
                 <span class="guide-label">Logs</span>
             </a>
         </content-guide>
