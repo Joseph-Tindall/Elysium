@@ -6,7 +6,7 @@
     <title>Offline Layout File</title>
     <link rel="stylesheet" href="../../wwwroot/ttf/MaterialSymbols.css" asp-append-version="true"/>
     <link rel="stylesheet" href="../../wwwroot/ttf/OpenSans.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="../../wwwroot/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="../../wwwroot/css/Elysium-Shared.css" asp-append-version="true"/>
 </head>
 <body>
     <elysium-app>
@@ -22,9 +22,19 @@
             </div>
         </nav-bar>
         <content-guide id="nav-guide" slot="content-guide" class="">
+            <a class="section-link" aria-expanded="false" aria-label="Logs" role="button">
+                <span class="guide-icon">
+                    <span class="material-symbols-outlined" aria-hidden="true">
+                        account_tree
+                    </span>
+                </span>
+                <span class="guide-label">Packages</span>
+            </a>
             <a class="section-link current-section" aria-expanded="false" aria-label="Logs" role="button">
                 <span class="guide-icon">
-                    <span class="material-symbols-outlined" aria-hidden="true">flowsheet</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">
+                        flowsheet
+                    </span>
                 </span>
                 <span class="guide-label">Logs</span>
             </a>

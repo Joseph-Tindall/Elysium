@@ -92,8 +92,8 @@ elysium-app {
   --dark-theme-text-color: #e6e1e3;
   --dark-theme-text-highlight: #e2e0fb;
   --dark-theme-highlight-color: 255, 255, 255;
-  --dark-theme-hover-opacity: 0.2;
-  --dark-theme-active-opacity: 0.4;
+  --dark-theme-hover-opacity: 0.08;
+  --dark-theme-active-opacity: 0.15;
   
   --nav-bar-height: 64px;
   --content-guide-width: var(--nav-bar-height);
@@ -116,6 +116,7 @@ nav-bar {
 
 content-guide {
   display: flex;
+  flex-direction: column;
   position: fixed;
   left: 0;
   height: calc(100vh - var(--nav-bar-height));
@@ -145,7 +146,19 @@ content-guide .section-link {
   --symbol-label-space: calc((var(--content-guide-width) - var(--guide-padding)) * 0.25);
   --symbol-label-width: calc(var(--content-guide-width) - var(--symbol-label-space));
   --symbol-label-height: 32px;
+  
+  font-size: 12px;
+  text-align: center;
+  padding-top: 4px;
+  margin-bottom: 14px;
+  font-variation-settings: "wdth" 90, "wght" 550;
+  transition: font-variation-settings 0.2s cubic-bezier(0.2, 0, 0, 1);
   position: relative;
+}
+
+content-guide .section-link:hover,
+content-guide .section-link.current-section {
+  font-variation-settings: "wdth" 85, "wght" 700;
 }
 
 content-guide .section-link.current-section .guide-icon::before {
@@ -181,6 +194,14 @@ content-guide .guide-icon {
   height: var(--symbol-label-height);
 }
 
+content-guide .guide-label {
+  margin: 0 auto 4px auto;
+}
+
+content-guide .section-link.current-section .guide-label {
+  color: var(--primary-text-highlight);
+}
+
 content-guide .guide-icon .material-symbols-outlined {
   z-index: 1;
   transition: font-variation-settings 0.2s cubic-bezier(0.2, 0, 0, 1);
@@ -189,6 +210,7 @@ content-guide .guide-icon .material-symbols-outlined {
 
 content-guide > [role="button"]:hover {
   cursor: pointer;
+  
 }
 
 content-guide > [role="button"]:hover .guide-icon {
