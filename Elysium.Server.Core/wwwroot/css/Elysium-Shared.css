@@ -27,7 +27,8 @@ elysium-app {
   display: block;
   min-height: 100vmin;
   
-  --primary-background-color: var(--dark-theme-background-color);
+  --primary-background-primary: var(--dark-theme-background-primary);
+  --primary-background-secondary: var(--dark-theme-background-secondary);
   --primary-border-color: var(--dark-theme-border-primary);
   --primary-text-color: var(--dark-theme-text-color);
   --primary-text-highlight: var(--dark-theme-text-highlight);
@@ -35,14 +36,20 @@ elysium-app {
   --primary-hover-opacity: var(--dark-theme-hover-opacity);
   --primary-active-opacity: var(--dark-theme-active-opacity);
   
-  --light-theme-background-color: #fff;
+  --light-theme-background-primary: #ddd;
+  --light-theme-background-secondary: #fff;
+  --light-theme-background-tertiary: #eee;
+  --light-theme-background-quaternary: #ccc;
   --light-theme-border-primary: #ccc;
   --light-theme-text-color: #212121;
   --light-theme-text-highlight: #000;
   --light-theme-highlight-color: 0, 0, 0;
   --light-theme-hover-opacity: 0.1;
   --light-theme-active-opacity: 0.3;
-  --dark-theme-background-color: #2b2b2b;
+  --dark-theme-background-primary: #2b2b2b;
+  --dark-theme-background-secondary: #222;
+  --dark-theme-background-tertiary: #262626;
+  --dark-theme-background-quaternary: #303030;
   --dark-theme-border-primary: #1c1c1c;
   --dark-theme-text-color: #e6e1e3;
   --dark-theme-text-highlight: #e2e0fb;
@@ -57,12 +64,13 @@ elysium-app {
   color: var(--primary-text-color);
   padding-top: var(--nav-bar-height);
   padding-left: var(--content-guide-width);
-  background-color: var(--primary-background-color);
+  background-color: var(--primary-background-primary);
 }
 
 main {
-  border-color: var(--primary-border-color);
   border-style: solid;
   border-width: 1px 0 0 1px;
+  border-color: var(--primary-border-color);
+  background-color: var(--primary-background-secondary);
   min-height: calc(100vh - var(--nav-bar-height));
 }

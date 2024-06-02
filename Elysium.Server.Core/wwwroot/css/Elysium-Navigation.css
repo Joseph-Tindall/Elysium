@@ -6,3 +6,15 @@
     justify-content: flex-start;
     background-color: var(--primary-background-color);
 }
+
+nav-bar .left-content {
+    align-items: center;
+    justify-content: center;
+    width: var(--content-guide-width);
+}
+
+nav-bar .left-content .material-symbols-rounded {
+    color: #e5e0d8;
+    font-size: 32px;
+    font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 0;
+}
