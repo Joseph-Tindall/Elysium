@@ -2,17 +2,11 @@
     <h1>Elysium</h1>
 </div>
 
-A C# .NET-based project revolving around silent software deployment and management for Windows machines.
+A C# .NET-based project revolving around silent software deployment and management for Windows machines. The repository is offered as [source-available](https://github.com/Joseph-Tindall/Elysium?tab=License-1-ov-file), allowing you to modify the source as needed, provided no financial profit or commercial gain is accomplished using the project.
 
-The project's main goal is to increase the quality of life for engineers  by providing a free solution to maintain software versioning and system updates across the domain. 
+## Vision
 
-Altogether, the project hopes to deliver a product that can achieve the following:
-
-* Host Elysium as a dedicated server VM, allowing for one point of maintenance.
-* Deploy files such as `.exe` and `.msi` to remote machines.
-* Feature a coding block style of conditions to allow flexible application/programming packages.
-* Enable direct script support such as `PowerShell` or `Command` that can be run as target systems or a specific user account.
-* Maintain an extensive logging set to obtain failure reports for executables and scripts to assist with troubleshooting.
+The project's main goal is to increase the quality of life for administrators by providing a free solution to maintain software versioning and system updates across the domain. This product is aimed at low-operating cost facilities, much like as the research laboratories I started my career off in.
 
 ## Support
 
