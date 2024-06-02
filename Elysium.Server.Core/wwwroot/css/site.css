@@ -70,19 +70,36 @@ html, body {
 
 elysium-app {
   display: block;
-  min-height: 100vh;
+  min-height: 100vmin;
   
   --primary-background-color: var(--dark-theme-background-color);
+  --primary-border-color: var(--dark-theme-border-primary);
   --primary-text-color: var(--dark-theme-text-color);
+  --primary-text-highlight: var(--dark-theme-text-highlight);
+  --primary-highlight-color: var(--dark-theme-highlight-color);
+  --primary-hover-opacity: var(--dark-theme-hover-opacity);
+  --primary-active-opacity: var(--dark-theme-active-opacity);
   
   --light-theme-background-color: #fff;
+  --light-theme-border-primary: #ccc;
   --light-theme-text-color: #212121;
+  --light-theme-text-highlight: #000;
+  --light-theme-highlight-color: 0, 0, 0;
+  --light-theme-hover-opacity: 0.1;
+  --light-theme-active-opacity: 0.3;
   --dark-theme-background-color: #2b2b2b;
-  --dark-theme-text-color: #fff;
+  --dark-theme-border-primary: #1c1c1c;
+  --dark-theme-text-color: #e6e1e3;
+  --dark-theme-text-highlight: #e2e0fb;
+  --dark-theme-highlight-color: 255, 255, 255;
+  --dark-theme-hover-opacity: 0.2;
+  --dark-theme-active-opacity: 0.4;
   
   --nav-bar-height: 64px;
   --content-guide-width: var(--nav-bar-height);
   
+  font-family: "Open Sans", sans-serif;
+  color: var(--primary-text-color);
   padding-top: var(--nav-bar-height);
   padding-left: var(--content-guide-width);
   background-color: var(--primary-background-color);
@@ -94,17 +111,24 @@ nav-bar {
   inset: 0 0 auto 0;
   height: var(--nav-bar-height);
   justify-content: flex-start;
-  background-color: lightcoral;
+  background-color: var(--primary-background-color);
 }
 
 content-guide {
   display: flex;
   position: fixed;
   left: 0;
-  height: 100vh;
+  height: calc(100vh - var(--nav-bar-height));
   width: var(--content-guide-width);
   justify-content: flex-start;
-  background-color: lightgreen;
+  background-color: var(--primary-background-color);
+}
+
+main {
+  border-color: var(--primary-border-color);
+  border-style: solid;
+  border-width: 1px 0 0 1px;
+  min-height: calc(100vh - var(--nav-bar-height));
 }
 
 content-guide > [role="button"] {
@@ -114,21 +138,73 @@ content-guide > [role="button"] {
   display: block;
   height: fit-content;
   width: var(--content-guide-width);
-  background: lightsteelblue;
+  background: transparent;
 }
 
-content-guide .guide-icon {
+content-guide .section-link {
   --symbol-label-space: calc((var(--content-guide-width) - var(--guide-padding)) * 0.25);
   --symbol-label-width: calc(var(--content-guide-width) - var(--symbol-label-space));
   --symbol-label-height: 32px;
-  
-  display: flex;
   position: relative;
+}
+
+content-guide .section-link.current-section .guide-icon::before {
+  background-color: #45455a;
+}
+
+content-guide .section-link .guide-icon::after {
+  background-position: center;
+  transition: background 0.7s cubic-bezier(0.2, 0, 0, 1);
+}
+
+content-guide .section-link.current-section .guide-icon::before,
+content-guide .section-link .guide-icon::after {
+  display: block;
+  content: "";
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+content-guide .guide-icon {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
   justify-content: center;
   margin: 0 auto 4px auto;
+  color: var(--primary-text-color);
   border-radius: calc(var(--symbol-label-height) / 2);
   width: var(--symbol-label-width);
   height: var(--symbol-label-height);
-  background-color: lightgoldenrodyellow;
+}
+
+content-guide .guide-icon .material-symbols-outlined {
+  z-index: 1;
   transition: font-variation-settings 0.2s cubic-bezier(0.2, 0, 0, 1);
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+content-guide > [role="button"]:hover {
+  cursor: pointer;
+}
+
+content-guide > [role="button"]:hover .guide-icon {
+  color: var(--primary-text-highlight);
+}
+
+content-guide > [role="button"]:hover .guide-icon::after {
+  background: rgba(var(--primary-highlight-color), var(--primary-hover-opacity)) radial-gradient(circle, transparent 1%, rgba(var(--primary-highlight-color), var(--primary-hover-opacity)) 1%) center/15000%;
+}
+
+content-guide > [role="button"]:active .guide-icon::after {
+  background-color: rgba(var(--primary-highlight-color), var(--primary-active-opacity));
+  background-size: 100%;
+  transition: background 0s;
+}
+
+content-guide > [role="button"]:hover .guide-icon .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 550, 'GRAD' 0, 'opsz' 24;
 }
