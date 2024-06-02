@@ -1,0 +1,8 @@
+﻿nav-bar {
+    display: flex;
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: var(--nav-bar-height);
+    justify-content: flex-start;
+    background-color: var(--primary-background-color);
+}
