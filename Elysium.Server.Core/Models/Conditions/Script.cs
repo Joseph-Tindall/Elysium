@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Elysium.Server.Core.Models.Enums;
 
 namespace Elysium.Server.Core.Models.Conditions;
@@ -12,6 +13,7 @@ public class Script
     public List<int> FailureCodes { get; set; } = [1];
     public bool Invert { get; set; }
     public ScriptTypes Type { get; set; } = ScriptTypes.PowerShell;
+    [DisplayName("Minimum Version")]
     public string? MinimumVersion { get; set; } = null;
     public string? Hypothesis { get; set; }
 }

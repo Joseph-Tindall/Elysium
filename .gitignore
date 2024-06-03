@@ -43,6 +43,7 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.db
 
 *.suo
 *.user
