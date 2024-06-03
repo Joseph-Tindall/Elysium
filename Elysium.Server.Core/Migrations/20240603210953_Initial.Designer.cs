@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elysium.Server.Core.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    [Migration("20240603202343_Initial")]
+    [Migration("20240603210953_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.0-preview.3.24172.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
             modelBuilder.Entity("Elysium.Server.Core.Models.Application", b =>
                 {

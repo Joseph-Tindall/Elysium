@@ -14,7 +14,7 @@ namespace Elysium.Server.Core.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.0-preview.3.24172.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
             modelBuilder.Entity("Elysium.Server.Core.Models.Application", b =>
                 {
