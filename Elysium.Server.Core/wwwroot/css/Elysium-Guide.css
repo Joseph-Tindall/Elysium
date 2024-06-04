@@ -13,6 +13,7 @@ content-guide > [role="button"] {
     --guide-padding: 2px;
 
     padding: var(--guide-padding);
+    border: 0;
     display: block;
     height: fit-content;
     width: var(--content-guide-width);
@@ -63,6 +64,7 @@ content-guide .guide-icon {
     overflow: hidden;
     position: relative;
     align-items: center;
+    text-decoration: none;
     justify-content: center;
     margin: 0 auto 4px auto;
     color: var(--primary-text-color);
@@ -73,6 +75,7 @@ content-guide .guide-icon {
 
 content-guide .guide-label {
     margin: 0 auto 4px auto;
+    color: var(--primary-text-color);
 }
 
 content-guide .section-link.current-section .guide-label {
