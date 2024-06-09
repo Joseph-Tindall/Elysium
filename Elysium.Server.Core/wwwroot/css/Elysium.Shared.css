@@ -1,7 +1,7 @@
-@import url(Elysium-Reset.css);
-@import url(Elysium-Navigation.css);
-@import url(Elysium-Guide.css);
-@import url(Elysium-Main.css);
+@import url(Elysium.Reset.css);
+@import url(Elysium.Navigation.css);
+@import url(Elysium.Guide.css);
+@import url(Elysium.Main.css);
 
 .left-content {
   display: flex;
