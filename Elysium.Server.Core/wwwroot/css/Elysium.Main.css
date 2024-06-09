@@ -1,4 +1,4 @@
-﻿[role="menubar"] {
+﻿[role="main"] [role="menubar"] {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid var(--primary-border-color-secondary);
@@ -7,6 +7,33 @@
 [role="main"] [role="menubar"] h1 {
     font-size: 24px;
     padding: var(--side-padding);
+}
+
+[role="main"] [role="menubar"] button {
+    --width: 42px;
+    --height: var(--width);
+    
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: var(--width);
+    height: var(--height);
+    border-radius: 50%;
+    margin-left: 10px;
+    color: var(--primary-text-color);
+    background-color: transparent;
+    transition: background-color var(--transition-delay) var(--transition-effect);
+}
+
+[role="main"] [role="menubar"] button:hover {
+    background-color: rgba(var(--primary-highlight-color), var(--primary-hover-opacity));
+}
+
+[role="main"] [role="menubar"] button .material-symbols-rounded {
+    margin: 0 auto;
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
 }
 
 [role="main"] [role="tablist"] {
