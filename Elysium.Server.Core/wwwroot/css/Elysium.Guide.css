@@ -30,7 +30,7 @@ content-guide .section-link {
     padding-top: 4px;
     margin-bottom: 14px;
     font-variation-settings: "wdth" 85, "wght" 550;
-    transition: font-variation-settings 0.2s cubic-bezier(0.2, 0, 0, 1);
+    transition: font-variation-settings var(--transition-delay) var(--transition-effect);
     position: relative;
 }
 
@@ -84,7 +84,7 @@ content-guide .section-link.current-section .guide-label {
 
 content-guide .guide-icon .material-symbols-outlined {
     z-index: 1;
-    transition: font-variation-settings 0.2s cubic-bezier(0.2, 0, 0, 1);
+    transition: font-variation-settings var(--transition-delay) var(--transition-effect);
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 

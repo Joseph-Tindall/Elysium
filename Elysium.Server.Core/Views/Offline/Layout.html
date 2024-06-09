@@ -42,12 +42,33 @@
             </button>
         </content-guide>
         <main role="main">
-            <h1 class="side-padding">Logging</h1>
-            <nav>
-                <button class="tab-link" onclick="alert('hi')">Query</button>
-                <button class="tab-link" onclick="alert('hi')">Saved</button>
+            <nav role="menubar" class="side-padding">
+                <h1 class="center-content">Logs History</h1>
+                <div role="menu" class="right-content">
+                    <button>Save</button>
+                    <button>Export</button>
+                </div>
             </nav>
-            <tab id="query">
+            <nav role="tablist">
+                <button class="tab-link active" onclick="alert('hi')">
+                    <span class="tab-icon">
+                        <span class="material-symbols-outlined" aria-hidden="true">
+                            article_shortcut
+                        </span>
+                    </span>
+                    <span class="tab-label">All logs</span>
+                </button>
+                <button class="tab-link" onclick="alert('hi')">
+                    <span class="badge">24</span>
+                    <span class="tab-icon">
+                        <span class="material-symbols-outlined" aria-hidden="true">
+                            collections_bookmark
+                        </span>
+                    </span>
+                    <span class="tab-label">Saved</span>
+                </button>
+            </nav>
+            <tab id="all">
                 Query
             </tab>
             <tab id="saved">

@@ -1,7 +1,99 @@
-﻿[role="main"] h1 {
-    width: 100%;
+﻿[role="menubar"] {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--primary-border-color-secondary);
+}
+
+[role="main"] [role="menubar"] h1 {
     font-size: 24px;
-    border-bottom: 1px solid var(--dark-theme-border-secondary);
-    padding-top: var(--side-padding);
-    padding-bottom: var(--side-padding);
+    padding: var(--side-padding);
+}
+
+[role="main"] [role="tablist"] {
+    display: flex;
+    border-bottom: 1px solid var(--primary-border-color-secondary);
+}
+
+[role="main"] [role="tablist"] button {
+    --pesudo-width: 100%;
+    --pseudo-height: 80%;
+    
+    border: 0;
+    flex: none;
+    display: flex;
+    padding: calc(var(--side-padding) / 2) var(--side-padding);
+    margin: 0 var(--side-padding);
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    background-color: transparent;
+    color: var(--primary-text-color);
+    transition: color var(--transition-delay) var(--transition-effect);
+}
+
+[role="main"] [role="tablist"] button > span {
+    flex-shrink: 0;
+}
+
+[role="main"] [role="tablist"] button::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: calc((100% - var(--pseudo-height)) / 2) calc((100% - var(--pesudo-width)) / 2);
+    width: var(--pesudo-width);
+    height: var(--pseudo-height);
+    border-radius: 16px;
+    background-color: transparent;
+    transition: background-color var(--transition-delay) var(--transition-effect);
+}
+
+[role="main"] [role="tablist"] button::after {
+    --active-height: 2px;
+    --active-spacing: calc((100% - var(--pesudo-width)) / 2);
+    
+    content: "";
+    display: block;
+    position: absolute;
+    width: var(--pesudo-width);
+    height: var(--active-height);
+    border-radius: var(--active-height) var(--active-height) 0 0;
+    inset: calc(100% - var(--active-height)) var(--active-spacing) 0 var(--active-spacing);
+    background-color: transparent;
+}
+
+[role="main"] [role="tablist"] button.active::after {
+    background-color: var(--primary-accent-color);
+}
+
+[role="main"] [role="tablist"] button:hover,
+[role="main"] [role="tablist"] button:focus {
+    color: var(--primary-accent-color);
+}
+
+[role="main"] [role="tablist"] button:hover::before,
+[role="main"] [role="tablist"] button:focus::before {
+    background-color: rgba(var(--primary-highlight-color), var(--primary-hover-opacity));
+}
+
+[role="main"] [role="tablist"] button .tab-icon {
+    height: 24px;
+}
+
+[role="main"] [role="tablist"] button .tab-icon .material-symbols-outlined {
+    font-variation-settings: "wdth" 50, "wght" 300;
+}
+
+[role="main"] [role="tablist"] button .badge {
+    --badge-size: 18px;
+    
+    font-size: 12px;
+    position: absolute;
+    background-color: var(--primary-badge-color);
+    width: fit-content;
+    padding: 2px 4px;
+    line-height: 12px;
+    height: var(--badge-size);
+    border-radius: var(--badge-size);
+    inset: 4px calc(var(--pesudo-width) / 2);
 }

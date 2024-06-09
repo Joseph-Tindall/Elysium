@@ -25,8 +25,6 @@
 }
 
 .side-padding {
-  --side-padding: 15px;
-  
   padding-left: var(--side-padding);
   padding-right: var(--side-padding);
 }
@@ -35,16 +33,20 @@ elysium-app {
   display: block;
   min-height: 100vmin;
   
+  --primary-accent-color: var(--dark-theme-accent-color);
   --primary-background-primary: var(--dark-theme-background-primary);
   --primary-background-secondary: var(--dark-theme-background-secondary);
   --primary-border-color: var(--dark-theme-border-primary);
   --primary-border-color-secondary: var(--dark-theme-border-secondary);
   --primary-text-color: var(--dark-theme-text-color);
   --primary-text-highlight: var(--dark-theme-text-highlight);
+  --primary-text-inactive: var(--dark-theme-text-inactive);
+  --primary-badge-color: var(--dark-theme-badge-color);
   --primary-highlight-color: var(--dark-theme-highlight-color);
   --primary-hover-opacity: var(--dark-theme-hover-opacity);
   --primary-active-opacity: var(--dark-theme-active-opacity);
   
+  --light-theme-accent-color: blue;
   --light-theme-background-primary: #ddd;
   --light-theme-background-secondary: #fff;
   --light-theme-background-tertiary: #eee;
@@ -53,9 +55,13 @@ elysium-app {
   --light-theme-border-secondary: #ddd;
   --light-theme-text-color: #212121;
   --light-theme-text-highlight: #000;
+  --light-theme-text-inactive: #444;
+  --light-theme-badge-color: #a83128;
   --light-theme-highlight-color: 0, 0, 0;
   --light-theme-hover-opacity: 0.1;
   --light-theme-active-opacity: 0.3;
+  
+  --dark-theme-accent-color: #ae9fdb;
   --dark-theme-background-primary: #2b2b2b;
   --dark-theme-background-secondary: #222;
   --dark-theme-background-tertiary: #262626;
@@ -64,12 +70,17 @@ elysium-app {
   --dark-theme-border-secondary: #3b3b3b;
   --dark-theme-text-color: #e6e1e3;
   --dark-theme-text-highlight: #e2e0fb;
+  --dark-theme-text-inactive: #9aa0a6;
+  --dark-theme-badge-color: #553f5d;
   --dark-theme-highlight-color: 255, 255, 255;
   --dark-theme-hover-opacity: 0.08;
   --dark-theme-active-opacity: 0.15;
-  
+
+  --side-padding: 15px;
   --nav-bar-height: 64px;
   --content-guide-width: var(--nav-bar-height);
+  --transition-delay: 0.2s;
+  --transition-effect: cubic-bezier(0.2, 0, 0, 1);
   
   font-family: "Open Sans", sans-serif;
   color: var(--primary-text-color);
