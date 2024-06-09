@@ -1,6 +1,7 @@
 @import url(Elysium-Reset.css);
 @import url(Elysium-Navigation.css);
 @import url(Elysium-Guide.css);
+@import url(Elysium-Main.css);
 
 .left-content {
   display: flex;
@@ -23,6 +24,13 @@
   justify-content: flex-end;
 }
 
+.side-padding {
+  --side-padding: 15px;
+  
+  padding-left: var(--side-padding);
+  padding-right: var(--side-padding);
+}
+
 elysium-app {
   display: block;
   min-height: 100vmin;
@@ -30,6 +38,7 @@ elysium-app {
   --primary-background-primary: var(--dark-theme-background-primary);
   --primary-background-secondary: var(--dark-theme-background-secondary);
   --primary-border-color: var(--dark-theme-border-primary);
+  --primary-border-color-secondary: var(--dark-theme-border-secondary);
   --primary-text-color: var(--dark-theme-text-color);
   --primary-text-highlight: var(--dark-theme-text-highlight);
   --primary-highlight-color: var(--dark-theme-highlight-color);
@@ -41,6 +50,7 @@ elysium-app {
   --light-theme-background-tertiary: #eee;
   --light-theme-background-quaternary: #ccc;
   --light-theme-border-primary: #ccc;
+  --light-theme-border-secondary: #ddd;
   --light-theme-text-color: #212121;
   --light-theme-text-highlight: #000;
   --light-theme-highlight-color: 0, 0, 0;
@@ -51,6 +61,7 @@ elysium-app {
   --dark-theme-background-tertiary: #262626;
   --dark-theme-background-quaternary: #303030;
   --dark-theme-border-primary: #1c1c1c;
+  --dark-theme-border-secondary: #3b3b3b;
   --dark-theme-text-color: #e6e1e3;
   --dark-theme-text-highlight: #e2e0fb;
   --dark-theme-highlight-color: 255, 255, 255;
@@ -67,7 +78,7 @@ elysium-app {
   background-color: var(--primary-background-primary);
 }
 
-main {
+[role="main"] {
   border-style: solid;
   border-width: 1px 0 0 1px;
   border-color: var(--primary-border-color);
