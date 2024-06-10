@@ -77,7 +77,47 @@
                 </button>
             </nav>
             <tab id="all">
-                Query
+                <table>
+                    <tr>
+                        <th>
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                <span class="material-symbols-rounded" aria-hidden="true">indeterminate_check_box</span>
+                            </label>
+                        </th>
+                        <th>Log ID</th>
+                        <th>Severity</th>
+                        <th>Timestamp</th>
+                        <th>Source</th>
+                        <th>Message</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                <span class="material-symbols-rounded" aria-hidden="true">check_box</span>
+                            </label>
+                        </td>
+                        <td>#000001</td>
+                        <td>Verbose</td>
+                        <td>2024-06-10 10:14:24 AM EDT</td>
+                        <td>Core</td>
+                        <td>{"someData":"placeholder","response":{"type":"error","invokedBy":"localhost:7103"}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                <span class="material-symbols-rounded" aria-hidden="true">check_box_outline_blank</span>
+                            </label>
+                        </td>
+                        <td>#000002</td>
+                        <td>Error</td>
+                        <td>2024-06-10 12:02:17 PM EDT</td>
+                        <td>Core</td>
+                        <td>{"someData":"placeholder","response":{"type":"error","invokedBy":"localhost:7103"}</td>
+                    </tr>
+                </table>
             </tab>
             <tab id="saved">
                 Saved

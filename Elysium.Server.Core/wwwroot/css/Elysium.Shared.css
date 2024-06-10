@@ -29,6 +29,10 @@
   padding-right: var(--side-padding);
 }
 
+tab {
+  display: block;
+}
+
 elysium-app {
   display: block;
   min-height: 100vmin;
@@ -89,10 +93,19 @@ elysium-app {
   background-color: var(--primary-background-primary);
 }
 
-[role="main"] {
-  border-style: solid;
-  border-width: 1px 0 0 1px;
-  border-color: var(--primary-border-color);
-  background-color: var(--primary-background-secondary);
-  min-height: calc(100vh - var(--nav-bar-height));
+.checkbox {
+  cursor: pointer;
+}
+
+.checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox:has([type="checkbox"]) .material-symbols-rounded {
+  transition: font-variation-settings var(--transition-delay) var(--transition-effect);
+}
+
+.checkbox:has([type="checkbox"]:checked) .material-symbols-rounded {
+  color: var(--primary-accent-color);
+  font-variation-settings: 'FILL' 1, 'wght' 550, 'GRAD' 0, 'opsz' 24;
 }

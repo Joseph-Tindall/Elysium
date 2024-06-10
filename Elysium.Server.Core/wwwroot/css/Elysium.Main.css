@@ -1,4 +1,12 @@
-﻿[role="main"] [role="menubar"] {
+﻿[role="main"] {
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    border-color: var(--primary-border-color-secondary);
+    background-color: var(--primary-background-secondary);
+    min-height: calc(100vh - var(--nav-bar-height));
+}
+
+[role="main"] [role="menubar"] {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid var(--primary-border-color-secondary);
@@ -48,6 +56,7 @@
     border: 0;
     flex: none;
     display: flex;
+    width: 82px;
     padding: calc(var(--side-padding) / 2) var(--side-padding);
     margin: 0 var(--side-padding);
     cursor: pointer;
@@ -123,4 +132,45 @@
     height: var(--badge-size);
     border-radius: var(--badge-size);
     inset: 4px calc(var(--pesudo-width) / 2);
+}
+
+[role="main"] table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+[role="main"] table tr {
+    background-color: var(--primary-background-secondary);
+    border-bottom: 1px solid var(--primary-border-color-secondary);
+    transition: background-color var(--transition-delay) var(--transition-effect);
+}
+
+[role="main"] table tr th {
+    text-align: left;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+[role="main"] table tr th:not(:first-of-type) {
+    opacity: 0.5;
+}
+
+[role="main"] table tr:not(:has(th)):hover {
+    background-color: var(--primary-background-primary);
+}
+
+[role="main"] table th,
+[role="main"] table td {
+    padding: 10px;
+}
+
+[role="main"] table th:first-of-type,
+[role="main"] table td:first-of-type {
+    padding-left: var(--side-padding);
+    text-align: right;
+}
+
+[role="main"] table th:last-of-type,
+[role="main"] table td:last-of-type {
+    padding-right: var(--side-padding);
 }
