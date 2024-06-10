@@ -40,6 +40,8 @@ elysium-app {
   --primary-accent-color: var(--dark-theme-accent-color);
   --primary-background-primary: var(--dark-theme-background-primary);
   --primary-background-secondary: var(--dark-theme-background-secondary);
+  --primary-background-tertiary: var(--dark-theme-background-tertiary);
+  --primary-background-quaternary: var(--dark-theme-background-quaternary);
   --primary-border-color: var(--dark-theme-border-primary);
   --primary-border-color-secondary: var(--dark-theme-border-secondary);
   --primary-text-color: var(--dark-theme-text-color);
@@ -68,10 +70,11 @@ elysium-app {
   --dark-theme-accent-color: #ae9fdb;
   --dark-theme-background-primary: #2b2b2b;
   --dark-theme-background-secondary: #222;
-  --dark-theme-background-tertiary: #262626;
+  --dark-theme-background-tertiary: #292929;
   --dark-theme-background-quaternary: #303030;
   --dark-theme-border-primary: #1c1c1c;
-  --dark-theme-border-secondary: #3b3b3b;
+  --dark-theme-border-secondary: #292929;
+  --dark-theme-border-tertiary: #3b3b3b;
   --dark-theme-text-color: #e6e1e3;
   --dark-theme-text-highlight: #e2e0fb;
   --dark-theme-text-inactive: #9aa0a6;
@@ -102,10 +105,33 @@ elysium-app {
 }
 
 .checkbox:has([type="checkbox"]) .material-symbols-rounded {
+  position: relative;
+  font-size: 20px;
+  line-height: inherit;
+  text-align: center;
+  font-variation-settings: 'FILL' 0, 'wght' 550, 'GRAD' 0, 'opsz' 12;
   transition: font-variation-settings var(--transition-delay) var(--transition-effect);
+}
+
+.checkbox:has([type="checkbox"]) .material-symbols-rounded::before {
+  --diameter: 48px;
+  
+  content: "";
+  inset: -9px -14px;
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  width: var(--diameter);
+  height: var(--diameter);
+  background-color: transparent;
+  transition: background-color var(--transition-delay) var(--transition-effect);
 }
 
 .checkbox:has([type="checkbox"]:checked) .material-symbols-rounded {
   color: var(--primary-accent-color);
-  font-variation-settings: 'FILL' 1, 'wght' 550, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings: 'FILL' 1, 'wght' 550, 'GRAD' 0, 'opsz' 20;
+}
+
+.checkbox:has([type="checkbox"]):hover .material-symbols-rounded::before {
+  background-color: rgba(var(--primary-highlight-color), var(--primary-hover-opacity));
 }
