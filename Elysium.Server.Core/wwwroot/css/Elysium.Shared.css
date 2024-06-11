@@ -110,7 +110,8 @@ elysium-app {
   line-height: inherit;
   text-align: center;
   font-variation-settings: 'FILL' 0, 'wght' 550, 'GRAD' 0, 'opsz' 12;
-  transition: font-variation-settings var(--transition-delay) var(--transition-effect);
+  transition: font-variation-settings var(--transition-delay) var(--transition-effect),
+              transform calc(var(--transition-delay) / 2) var(--transition-effect);
 }
 
 .checkbox:has([type="checkbox"]) .material-symbols-rounded::before {
@@ -123,13 +124,48 @@ elysium-app {
   border-radius: 50%;
   width: var(--diameter);
   height: var(--diameter);
+  outline: 1px solid transparent;
   background-color: transparent;
-  transition: background-color var(--transition-delay) var(--transition-effect);
+  transition: background-color var(--transition-delay) var(--transition-effect), 
+              outline-color var(--transition-delay) var(--transition-effect);
+}
+
+.checkbox:has([type="checkbox"]).partial .material-symbols-rounded .partial,
+.checkbox:not(.partial) .material-symbols-rounded .partial {
+  display: none;
+}
+
+.checkbox:has([type="checkbox"]:checked).partial .material-symbols-rounded .partial {
+  display: block;
+}
+
+.checkbox:has([type="checkbox"]):active .material-symbols-rounded {
+  transform: scale(0.95);
+}
+
+.checkbox:has([type="checkbox"]):active .material-symbols-rounded::before {
+  outline-color: white;
 }
 
 .checkbox:has([type="checkbox"]:checked) .material-symbols-rounded {
   color: var(--primary-accent-color);
   font-variation-settings: 'FILL' 1, 'wght' 550, 'GRAD' 0, 'opsz' 20;
+}
+
+.checkbox:has([type="checkbox"]) .material-symbols-rounded .checked {
+  display: none;
+}
+
+.checkbox:has([type="checkbox"]) .material-symbols-rounded .unchecked {
+  display: block;
+}
+
+.checkbox:not(.partial):has([type="checkbox"]:checked) .material-symbols-rounded .checked {
+  display: block;
+}
+
+.checkbox:has([type="checkbox"]:checked) .material-symbols-rounded .unchecked {
+  display: none;
 }
 
 .checkbox:has([type="checkbox"]):hover .material-symbols-rounded::before {

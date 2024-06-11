@@ -40,7 +40,7 @@
                 </span>
                 <span class="guide-label">Logs</span>
             </button>
-            <button class="section-link" asp-area="" asp-controller="Home" aria-expanded="false" aria-label="Logs" role="button" tabindex="2" onclick="alert('Logs')">
+            <button class="section-link" asp-area="" asp-controller="Home" aria-expanded="false" aria-label="Logs" role="button" tabindex="2" onclick="alert('Storage')">
                 <span class="guide-icon">
                     <span class="material-symbols-outlined" aria-hidden="true">
                         storage
@@ -109,9 +109,13 @@
                 <table>
                     <tr>
                         <th>
-                            <label class="checkbox">
+                            <label class="checkbox partial">
                                 <input type="checkbox">
-                                <span class="material-symbols-rounded" aria-hidden="true">indeterminate_check_box</span>
+                                <span class="material-symbols-rounded" aria-hidden="true">
+                                    <span class="checked">check_box</span>
+                                    <span class="partial">indeterminate_check_box</span>
+                                    <span class="unchecked">check_box_outline_blank</span>
+                                </span>
                             </label>
                         </th>
                         <th>Log ID</th>
@@ -124,7 +128,10 @@
                         <td>
                             <label class="checkbox">
                                 <input type="checkbox">
-                                <span class="material-symbols-rounded" aria-hidden="true">check_box</span>
+                                <span class="material-symbols-rounded" aria-hidden="true">
+                                    <span class="checked">check_box</span>
+                                    <span class="unchecked">check_box_outline_blank</span>
+                                </span>
                             </label>
                         </td>
                         <td>#000001</td>
@@ -137,7 +144,10 @@
                         <td>
                             <label class="checkbox">
                                 <input type="checkbox">
-                                <span class="material-symbols-rounded" aria-hidden="true">check_box_outline_blank</span>
+                                <span class="material-symbols-rounded" aria-hidden="true">
+                                    <span class="checked">check_box</span>
+                                    <span class="unchecked">check_box_outline_blank</span>
+                                </span>
                             </label>
                         </td>
                         <td>#000002</td>
