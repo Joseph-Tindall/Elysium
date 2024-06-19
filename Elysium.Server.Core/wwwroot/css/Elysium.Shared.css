@@ -130,12 +130,12 @@ elysium-app {
               outline-color var(--transition-delay) var(--transition-effect);
 }
 
-.checkbox:has([type="checkbox"]).partial .material-symbols-rounded .partial,
+.checkbox:has([type="checkbox"]).partial .material-symbols-rounded .unchecked,
 .checkbox:not(.partial) .material-symbols-rounded .partial {
   display: none;
 }
 
-.checkbox:has([type="checkbox"]:checked).partial .material-symbols-rounded .partial {
+.checkbox:has([type="checkbox"]:not(:checked)).partial .material-symbols-rounded .partial {
   display: block;
 }
 
@@ -147,7 +147,8 @@ elysium-app {
   outline-color: white;
 }
 
-.checkbox:has([type="checkbox"]:checked) .material-symbols-rounded {
+.checkbox:has([type="checkbox"]:checked) .material-symbols-rounded,
+.checkbox:has([type="checkbox"]).partial .material-symbols-rounded {
   color: var(--primary-accent-color);
   font-variation-settings: 'FILL' 1, 'wght' 550, 'GRAD' 0, 'opsz' 20;
 }

@@ -9,6 +9,9 @@ function toggleFullListSelection(event: Event): void {
     const target: HTMLElement = event.target as HTMLElement;
     const table: HTMLTableElement = target.closest('table');
     if (!table) return;
+
+    const labelElement: HTMLLabelElement | null = target?.closest('label')
+    labelElement.classList.remove('partial');
     
     const checkboxes: NodeListOf<Element> = table.querySelectorAll('input[type="checkbox"]');
 
@@ -24,3 +27,40 @@ function toggleFullListSelection(event: Event): void {
         checkbox.checked =!allChecked;
     });
 }
+
+function updateToggleCheckboxState(event: Event): void {
+    const target: HTMLInputElement = event.currentTarget as HTMLInputElement;
+    const table: HTMLTableElement = target.closest('table');
+    if (!table) return;
+
+    const checkboxes = Array.from(
+        table.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)')
+    );
+    const totalCheckboxes = checkboxes.length;
+    const checkedCount = checkboxes.filter(
+        (checkbox): checkbox is HTMLInputElement =>
+            checkbox instanceof HTMLInputElement && checkbox.checked
+    ).length;
+
+    const toggleCheckbox: HTMLInputElement = table.querySelector('input.toggleCheckbox') as HTMLInputElement | null;
+    const labelElement: HTMLLabelElement | null = toggleCheckbox?.closest('label')
+    if (!toggleCheckbox) return;
+
+    if (checkedCount === totalCheckboxes && totalCheckboxes > 0) {
+        toggleCheckbox.checked = true;
+        labelElement.classList.remove('partial');
+    } else if (checkedCount > 0 && checkedCount < totalCheckboxes) {
+        toggleCheckbox.checked = false;
+        labelElement.classList.add('partial');
+    } else {
+        toggleCheckbox.checked = false;
+        labelElement.classList.remove('partial');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateToggleCheckboxState);
+    });
+});
