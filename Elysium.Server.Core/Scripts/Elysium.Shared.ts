@@ -33,11 +33,12 @@ function updateToggleCheckboxState(event: Event): void {
     const table: HTMLTableElement = target.closest('table');
     if (!table) return;
 
-    const checkboxes = Array.from(
+    const checkboxes: Element[] = Array.from(
         table.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)')
     );
-    const totalCheckboxes = checkboxes.length;
-    const checkedCount = checkboxes.filter(
+    
+    const totalCheckboxes: number = checkboxes.length;
+    const checkedCount: number = checkboxes.filter(
         (checkbox): checkbox is HTMLInputElement =>
             checkbox instanceof HTMLInputElement && checkbox.checked
     ).length;
@@ -58,9 +59,49 @@ function updateToggleCheckboxState(event: Event): void {
     }
 }
 
+function populateCalendar(month: number, year: number): void {
+    const calendar: HTMLElement = document.getElementById("calendar");
+    if (!calendar) return;
+
+    while (calendar.children.length > 7) {
+        calendar.removeChild(calendar.lastChild!);
+    }
+
+    const today: Date = new Date();
+    const currentDay: number = today.getDate();
+    const currentMonth: number = today.getMonth();
+    const currentYear: number = today.getFullYear();
+
+    const firstDayOfMonth: Date = new Date(year, month, 1);
+    const lastDayOfMonth: Date = new Date(year, month + 1, 0);
+    const daysInMonth: number = lastDayOfMonth.getDate();
+
+    const startDay: number = firstDayOfMonth.getDay();
+
+    for (let i: number = 0; i < startDay; i++) {
+        const emptyCell:HTMLDivElement = document.createElement("div");
+        emptyCell.className = "day";
+        calendar.appendChild(emptyCell);
+    }
+
+    for (let day: number = 1; day <= daysInMonth; day++) {
+        const dayCell: HTMLDivElement = document.createElement("div");
+        dayCell.className = "day";
+        dayCell.textContent = day.toString();
+
+        if (day === currentDay && month === currentMonth && year === currentYear) {
+            dayCell.classList.add("today");
+        }
+
+        calendar.appendChild(dayCell);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)');
+    const checkboxes: NodeListOf<Element> = document.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateToggleCheckboxState);
     });
+
+    populateCalendar(6, 2024);
 });

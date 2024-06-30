@@ -44,6 +44,7 @@ elysium-app {
   --primary-background-quaternary: var(--dark-theme-background-quaternary);
   --primary-border-color: var(--dark-theme-border-primary);
   --primary-border-color-secondary: var(--dark-theme-border-secondary);
+  --primary-border-color-tertiary: var(--dark-theme-border-tertiary);
   --primary-text-color: var(--dark-theme-text-color);
   --primary-text-highlight: var(--dark-theme-text-highlight);
   --primary-text-inactive: var(--dark-theme-text-inactive);
@@ -74,7 +75,7 @@ elysium-app {
   --dark-theme-background-quaternary: #303030;
   --dark-theme-border-primary: #1c1c1c;
   --dark-theme-border-secondary: #292929;
-  --dark-theme-border-tertiary: #3b3b3b;
+  --dark-theme-border-tertiary: #797979;
   --dark-theme-text-color: #e6e1e3;
   --dark-theme-text-highlight: #e2e0fb;
   --dark-theme-text-inactive: #9aa0a6;
@@ -171,4 +172,32 @@ elysium-app {
 
 .checkbox:has([type="checkbox"]):hover .material-symbols-rounded::before {
   background-color: rgba(var(--primary-highlight-color), var(--primary-hover-opacity));
+}
+
+.module-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: fit-content;
+  gap: 5px;
+  background-color: var(--primary-background-primary);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.module-calendar .combo-calendar {
+  
+}
+
+.module-calendar .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-background-quaternary);
+  border-radius: 5px;
+}
+
+.module-calendar .day.today {
+  outline: 2px solid var(--primary-border-color-tertiary);
 }
