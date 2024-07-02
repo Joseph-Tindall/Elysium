@@ -174,30 +174,45 @@ elysium-app {
   background-color: rgba(var(--primary-highlight-color), var(--primary-hover-opacity));
 }
 
+.combo-calendar {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  border-radius: 10px;
+  background-color: var(--primary-background-secondary);
+  border: 1px solid var(--primary-border-color-tertiary);
+}
+
 .module-calendar {
+  display: flex;
+  padding: 20px;
+}
+
+.module-calendar .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   width: fit-content;
   gap: 5px;
-  background-color: var(--primary-background-primary);
-  padding: 20px;
-  border-radius: 10px;
 }
 
-.module-calendar .combo-calendar {
-  
-}
-
-.module-calendar .day {
+.module-calendar .calendar-module-day {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   width: 40px;
   height: 40px;
-  background-color: var(--primary-background-quaternary);
   border-radius: 5px;
 }
 
-.module-calendar .day.today {
+.module-calendar .calendar-module-day.active {
+  background-color: var(--primary-accent-color);
+}
+
+.module-calendar .calendar-module-day.range {
+  background-color: var(--primary-background-quaternary);
+}
+
+.module-calendar .calendar-module-day.today {
   outline: 2px solid var(--primary-border-color-tertiary);
 }

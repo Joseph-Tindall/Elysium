@@ -59,12 +59,23 @@ function updateToggleCheckboxState(event: Event): void {
     }
 }
 
-function populateCalendar(month: number, year: number): void {
-    const calendar: HTMLElement = document.getElementById("calendar");
-    if (!calendar) return;
+let startDateRange: { day: number, month: number, year: number } | null = null;
+let endDateRange: { day: number, month: number, year: number } | null = null;
 
-    while (calendar.children.length > 7) {
-        calendar.removeChild(calendar.lastChild!);
+function clearRange(): void {
+    const days: NodeListOf<Element> = document.querySelectorAll('.calendar-module-day');
+    days.forEach(day => {
+        day.classList.remove("active");
+        day.classList.remove("range");
+    });
+}
+
+function populateCalendar(calendar: HTMLElement, month: number, year: number): void {
+    const childElement: HTMLElement | null = calendar.querySelector(".days");
+    if (!childElement) return;
+    
+    while (childElement.children.length > 7) {
+        childElement.removeChild(childElement.lastChild!);
     }
 
     const today: Date = new Date();
@@ -80,28 +91,77 @@ function populateCalendar(month: number, year: number): void {
 
     for (let i: number = 0; i < startDay; i++) {
         const emptyCell:HTMLDivElement = document.createElement("div");
-        emptyCell.className = "day";
-        calendar.appendChild(emptyCell);
+        childElement.appendChild(emptyCell);
     }
 
     for (let day: number = 1; day <= daysInMonth; day++) {
         const dayCell: HTMLDivElement = document.createElement("div");
-        dayCell.className = "day";
+        dayCell.className = "calendar-module-day";
         dayCell.textContent = day.toString();
+        dayCell.dataset.day = day.toString();
+        dayCell.dataset.month = month.toString();
+        dayCell.dataset.year = year.toString();
+        dayCell.addEventListener('click', onDayClick);
 
         if (day === currentDay && month === currentMonth && year === currentYear) {
             dayCell.classList.add("today");
         }
 
-        calendar.appendChild(dayCell);
+        childElement.appendChild(dayCell);
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function onDayClick(event: MouseEvent): void {
+    const target: HTMLElement = event.currentTarget as HTMLElement;
+    const day: number = parseInt(target.dataset.day!);
+    const month: number = parseInt(target.dataset.month!);
+    const year: number = parseInt(target.dataset.year!);
+
+    if (!startDateRange || endDateRange) {
+        clearRange();
+        startDateRange = { day, month, year };
+        endDateRange = null;
+        target.classList.add('active');
+    } else {
+        endDateRange = { day, month, year };
+
+        if (new Date(year, month, day) < new Date(startDateRange.year, startDateRange.month, startDateRange.day)) {
+            endDateRange = startDateRange;
+            startDateRange = { day, month, year };
+        }
+
+        target.classList.add('active');
+        markRange();
+    }
+}
+
+function markRange(): void {
+    if (!startDateRange || !endDateRange) return;
+
+    const days: NodeListOf<HTMLElement> = document.querySelectorAll('.calendar-module-day');
+    const startDate: Date = new Date(startDateRange.year, startDateRange.month, startDateRange.day);
+    const endDate: Date = new Date(endDateRange.year, endDateRange.month, endDateRange.day);
+
+    days.forEach(day => {
+        const dayNum: number = parseInt(day.dataset.day!);
+        const monthNum: number = parseInt(day.dataset.month!);
+        const yearNum: number = parseInt(day.dataset.year!);
+        const currentDate: Date = new Date(yearNum, monthNum, dayNum);
+
+        if (currentDate > startDate && currentDate < endDate) {
+            day.classList.add('range');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', (): void => {
     const checkboxes: NodeListOf<Element> = document.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateToggleCheckboxState);
     });
 
-    populateCalendar(6, 2024);
+    const calendarTest1 = document.getElementById("calendar1");
+    const calendarTest2 = document.getElementById("calendar2");
+    populateCalendar(calendarTest1, 4, 2024);
+    populateCalendar(calendarTest2, 6, 2024);
 });

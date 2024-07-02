@@ -52,12 +52,21 @@ function updateToggleCheckboxState(event) {
         labelElement.classList.remove('partial');
     }
 }
-function populateCalendar(month, year) {
-    const calendar = document.getElementById("calendar");
-    if (!calendar)
+let startDateRange = null;
+let endDateRange = null;
+function clearRange() {
+    const days = document.querySelectorAll('.calendar-module-day');
+    days.forEach(day => {
+        day.classList.remove("active");
+        day.classList.remove("range");
+    });
+}
+function populateCalendar(calendar, month, year) {
+    const childElement = calendar.querySelector(".days");
+    if (!childElement)
         return;
-    while (calendar.children.length > 7) {
-        calendar.removeChild(calendar.lastChild);
+    while (childElement.children.length > 7) {
+        childElement.removeChild(childElement.lastChild);
     }
     const today = new Date();
     const currentDay = today.getDate();
@@ -69,24 +78,67 @@ function populateCalendar(month, year) {
     const startDay = firstDayOfMonth.getDay();
     for (let i = 0; i < startDay; i++) {
         const emptyCell = document.createElement("div");
-        emptyCell.className = "day";
-        calendar.appendChild(emptyCell);
+        childElement.appendChild(emptyCell);
     }
     for (let day = 1; day <= daysInMonth; day++) {
         const dayCell = document.createElement("div");
-        dayCell.className = "day";
+        dayCell.className = "calendar-module-day";
         dayCell.textContent = day.toString();
+        dayCell.dataset.day = day.toString();
+        dayCell.dataset.month = month.toString();
+        dayCell.dataset.year = year.toString();
+        dayCell.addEventListener('click', onDayClick);
         if (day === currentDay && month === currentMonth && year === currentYear) {
             dayCell.classList.add("today");
         }
-        calendar.appendChild(dayCell);
+        childElement.appendChild(dayCell);
     }
+}
+function onDayClick(event) {
+    const target = event.currentTarget;
+    const day = parseInt(target.dataset.day);
+    const month = parseInt(target.dataset.month);
+    const year = parseInt(target.dataset.year);
+    if (!startDateRange || endDateRange) {
+        clearRange();
+        startDateRange = { day, month, year };
+        endDateRange = null;
+        target.classList.add('active');
+    }
+    else {
+        endDateRange = { day, month, year };
+        if (new Date(year, month, day) < new Date(startDateRange.year, startDateRange.month, startDateRange.day)) {
+            endDateRange = startDateRange;
+            startDateRange = { day, month, year };
+        }
+        target.classList.add('active');
+        markRange();
+    }
+}
+function markRange() {
+    if (!startDateRange || !endDateRange)
+        return;
+    const days = document.querySelectorAll('.calendar-module-day');
+    const startDate = new Date(startDateRange.year, startDateRange.month, startDateRange.day);
+    const endDate = new Date(endDateRange.year, endDateRange.month, endDateRange.day);
+    days.forEach(day => {
+        const dayNum = parseInt(day.dataset.day);
+        const monthNum = parseInt(day.dataset.month);
+        const yearNum = parseInt(day.dataset.year);
+        const currentDate = new Date(yearNum, monthNum, dayNum);
+        if (currentDate > startDate && currentDate < endDate) {
+            day.classList.add('range');
+        }
+    });
 }
 document.addEventListener('DOMContentLoaded', () => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateToggleCheckboxState);
     });
-    populateCalendar(6, 2024);
+    const calendarTest1 = document.getElementById("calendar1");
+    const calendarTest2 = document.getElementById("calendar2");
+    populateCalendar(calendarTest1, 4, 2024);
+    populateCalendar(calendarTest2, 6, 2024);
 });
 //# sourceMappingURL=Elysium.Shared.js.map
