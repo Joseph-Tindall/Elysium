@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     const toggleCheckboxes = document.querySelectorAll('.toggleCheckbox');
     toggleCheckboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', toggleFullListSelection);
+        checkbox.addEventListener("change", toggleFullListSelection);
     });
 });
 function toggleFullListSelection(event) {
@@ -10,7 +10,7 @@ function toggleFullListSelection(event) {
     if (!table)
         return;
     const labelElement = target === null || target === void 0 ? void 0 : target.closest('label');
-    labelElement.classList.remove('partial');
+    labelElement.classList.remove("partial");
     const checkboxes = table.querySelectorAll('input[type="checkbox"]');
     let allChecked = true;
     checkboxes.forEach((checkbox) => {
@@ -41,24 +41,23 @@ function updateToggleCheckboxState(event) {
         return;
     if (checkedCount === totalCheckboxes && totalCheckboxes > 0) {
         toggleCheckbox.checked = true;
-        labelElement.classList.remove('partial');
+        labelElement.classList.remove("partial");
     }
     else if (checkedCount > 0 && checkedCount < totalCheckboxes) {
         toggleCheckbox.checked = false;
-        labelElement.classList.add('partial');
+        labelElement.classList.add("partial");
     }
     else {
         toggleCheckbox.checked = false;
-        labelElement.classList.remove('partial');
+        labelElement.classList.remove("partial");
     }
 }
 let startDateRange = null;
 let endDateRange = null;
+const dayCache = [];
 function clearRange() {
-    const days = document.querySelectorAll('.calendar-module-day');
-    days.forEach(day => {
-        day.classList.remove("active");
-        day.classList.remove("range");
+    dayCache.forEach((dayInfo) => {
+        dayInfo.element.classList.remove("active", "range");
     });
 }
 function populateCalendar(calendar, month, year) {
@@ -87,10 +86,12 @@ function populateCalendar(calendar, month, year) {
         dayCell.dataset.day = day.toString();
         dayCell.dataset.month = month.toString();
         dayCell.dataset.year = year.toString();
-        dayCell.addEventListener('click', onDayClick);
+        dayCell.addEventListener("click", onDayClick);
         if (day === currentDay && month === currentMonth && year === currentYear) {
             dayCell.classList.add("today");
         }
+        const dayDate = new Date(year, month, day);
+        dayCache.push({ element: dayCell, date: dayDate });
         childElement.appendChild(dayCell);
     }
 }
@@ -103,7 +104,7 @@ function onDayClick(event) {
         clearRange();
         startDateRange = { day, month, year };
         endDateRange = null;
-        target.classList.add('active');
+        target.classList.add("active");
     }
     else {
         endDateRange = { day, month, year };
@@ -111,30 +112,26 @@ function onDayClick(event) {
             endDateRange = startDateRange;
             startDateRange = { day, month, year };
         }
-        target.classList.add('active');
+        target.classList.add("active");
         markRange();
     }
 }
 function markRange() {
     if (!startDateRange || !endDateRange)
         return;
-    const days = document.querySelectorAll('.calendar-module-day');
     const startDate = new Date(startDateRange.year, startDateRange.month, startDateRange.day);
     const endDate = new Date(endDateRange.year, endDateRange.month, endDateRange.day);
-    days.forEach(day => {
-        const dayNum = parseInt(day.dataset.day);
-        const monthNum = parseInt(day.dataset.month);
-        const yearNum = parseInt(day.dataset.year);
-        const currentDate = new Date(yearNum, monthNum, dayNum);
-        if (currentDate > startDate && currentDate < endDate) {
-            day.classList.add('range');
+    dayCache.forEach((dayInfo) => {
+        const currentDate = dayInfo.date;
+        if (currentDate >= startDate && currentDate <= endDate && !dayInfo.element.classList.contains("active")) {
+            dayInfo.element.classList.add("range");
         }
     });
 }
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.toggleCheckbox)');
     checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateToggleCheckboxState);
+        checkbox.addEventListener("change", updateToggleCheckboxState);
     });
     const calendarTest1 = document.getElementById("calendar1");
     const calendarTest2 = document.getElementById("calendar2");
