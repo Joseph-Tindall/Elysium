@@ -232,7 +232,7 @@ elysium-app {
   color: var(--primary-text-color)
 }
 
-.module-calendar .calendar-module-day {
+.module-calendar .day {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -242,14 +242,14 @@ elysium-app {
   border-radius: 5px;
 }
 
-.module-calendar .calendar-module-day.active {
+.module-calendar .day.active {
   background-color: var(--primary-accent-color);
 }
 
-.module-calendar .calendar-module-day.range {
+.module-calendar .day.range {
   background-color: var(--primary-background-quaternary);
 }
 
-.module-calendar .calendar-module-day.today {
+.module-calendar .day.today {
   outline: 2px solid var(--primary-border-color-tertiary);
 }
