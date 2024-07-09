@@ -11,7 +11,9 @@ export function getCalendarStates(calendar: HTMLElement, calendars: Map<HTMLElem
 }
 
 export function clearRange(states: CalendarState[]): void {
-    states.forEach((state: CalendarState) => state.dayCache.forEach((dayInfo: DayInfo) => dayInfo.element.classList.remove("active", "range")));
+    states.forEach((state: CalendarState): void => {
+        state.dayCache.forEach((dayInfo: DayInfo) => dayInfo.element.classList.remove('active', 'range'));
+    });
 }
 
 export function updateMonthLabel(calendar: HTMLElement, month: number, year: number, MONTH_NAMES: string[]): void {

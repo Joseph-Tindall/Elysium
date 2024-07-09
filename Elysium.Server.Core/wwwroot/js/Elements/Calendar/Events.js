@@ -3,7 +3,7 @@ export function initializeCalendars() {
     document.querySelectorAll('.module-calendar').forEach((calendarElement) => {
         const calendar = new Calendar(calendarElement);
         Calendar.calendars.set(calendarElement, calendar.state);
-        calendar.populateCalendar();
+        calendar.populateCalendar(calendar.state.currentMonth, calendar.state.currentYear);
         const prevButton = calendarElement.querySelector(".prev-month");
         const nextButton = calendarElement.querySelector(".next-month");
         prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener("click", () => calendar.goToPreviousMonth());
@@ -19,8 +19,8 @@ export function initializeCalendars() {
             firstCalendar.currentYear = today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
             secondCalendar.currentMonth = today.getMonth();
             secondCalendar.currentYear = today.getFullYear();
-            new Calendar(moduleCalendars[0]).populateCalendar();
-            new Calendar(moduleCalendars[1]).populateCalendar();
+            new Calendar(moduleCalendars[0]).populateCalendar(firstCalendar.currentMonth, firstCalendar.currentYear);
+            new Calendar(moduleCalendars[1]).populateCalendar(secondCalendar.currentMonth, secondCalendar.currentYear);
         }
     });
 }
