@@ -4,6 +4,7 @@
 }
 
 interface CalendarState {
+    calendar: HTMLElement;
     currentMonth: number;
     currentYear: number;
     startDateRange: { day: number, month: number, year: number } | null;
@@ -97,8 +98,12 @@ function populateCalendar(calendar: HTMLElement, month: number, year: number): v
     }
 
     updateMonthLabel(calendar, month, year);
-    updateNavigationButtons(calendar);
     markRange(calendar);
+
+    const states: CalendarState[] = getCalendarStates(calendar);
+    states.forEach(state => {
+        updateNavigationButtons(state.calendar);
+    });
 }
 
 function onDayClick(event: MouseEvent, calendar: HTMLElement): void {
@@ -180,9 +185,16 @@ function updateNavigationButtons(calendar: HTMLElement): void {
     if (firstCalendarState && secondCalendarState) {
         if (secondCalendarState && state === secondCalendarState) {
             nextButton.disabled = (state.currentYear === today.getFullYear() && state.currentMonth === today.getMonth());
-            prevButton.disabled = (state.currentYear === firstCalendarState.currentYear && state.currentMonth === firstCalendarState.currentMonth);
+            
+            if ((state.currentMonth === firstCalendarState.currentMonth + 1 && state.currentYear === firstCalendarState.currentYear)
+            || (state.currentMonth === 0 && firstCalendarState.currentMonth === 11 && state.currentYear === firstCalendarState.currentYear + 1)){
+                prevButton.disabled = true;
+            }
         } else if (firstCalendarState && state === firstCalendarState) {
-            nextButton.disabled = (state.currentYear === secondCalendarState.currentYear && state.currentMonth === secondCalendarState.currentMonth);
+            if ((state.currentMonth === 11 && secondCalendarState.currentMonth === 0 && state.currentYear === secondCalendarState.currentYear - 1)
+            || (state.currentMonth === secondCalendarState.currentMonth - 1 && state.currentYear === secondCalendarState.currentYear)){
+                nextButton.disabled = true;
+            }
         }
     }
 
@@ -278,6 +290,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
     document.querySelectorAll('.module-calendar').forEach((calendar: HTMLElement) => {
         const today: Date = new Date();
         const state: CalendarState = {
+            calendar: calendar,
             currentMonth: today.getMonth(),
             currentYear: today.getFullYear(),
             startDateRange: null,
