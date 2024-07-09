@@ -229,12 +229,14 @@ function goToPreviousMonth(event: Event): void {
         state.currentMonth--;
     }
 
-    if (secondCalendarState && state === secondCalendarState && (state.currentYear === firstCalendarState.currentYear && state.currentMonth === firstCalendarState.currentMonth)) {
-        if (state.currentMonth === 11) {
-            state.currentMonth = 0;
-            state.currentYear++;
-        } else {
-            state.currentMonth++;
+    if (firstCalendarState && secondCalendarState) {
+        if (secondCalendarState && state === secondCalendarState && (state.currentYear === firstCalendarState.currentYear && state.currentMonth === firstCalendarState.currentMonth)) {
+            if (state.currentMonth === 11) {
+                state.currentMonth = 0;
+                state.currentYear++;
+            } else {
+                state.currentMonth++;
+            }
         }
     }
 
@@ -274,12 +276,14 @@ function goToNextMonth(event: Event): void {
         state.currentYear = today.getFullYear();
     }
 
-    if (firstCalendarState && state === firstCalendarState && (state.currentYear === secondCalendarState.currentYear && state.currentMonth === secondCalendarState.currentMonth)) {
-        if (state.currentMonth === 0) {
-            state.currentMonth = 11;
-            state.currentYear--;
-        } else {
-            state.currentMonth--;
+    if (firstCalendarState && secondCalendarState) {
+        if (firstCalendarState && state === firstCalendarState && (state.currentYear === secondCalendarState.currentYear && state.currentMonth === secondCalendarState.currentMonth)) {
+            if (state.currentMonth === 0) {
+                state.currentMonth = 11;
+                state.currentYear--;
+            } else {
+                state.currentMonth--;
+            }
         }
     }
 
