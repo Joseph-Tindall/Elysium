@@ -15,9 +15,10 @@ const calendars: Map<HTMLElement, CalendarState> = new Map();
 
 function getCalendarStates(calendar: HTMLElement): CalendarState[] {
     const states: CalendarState[] = [];
-    const combo: HTMLElement | null = calendar.closest('.combo-calendar');
-    if (combo) {
-        const moduleCalendars: HTMLElement[] = Array.from(combo.querySelectorAll('.module-calendar'));
+    const parent: HTMLElement | null = calendar.parentElement;
+
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars: HTMLElement[] = Array.from(parent.querySelectorAll('.module-calendar'));
         moduleCalendars.forEach(moduleCalendar => {
             const childState = calendars.get(moduleCalendar);
             if (childState) states.push(childState);
@@ -26,6 +27,7 @@ function getCalendarStates(calendar: HTMLElement): CalendarState[] {
         const state: CalendarState = calendars.get(calendar);
         if (state) states.push(state);
     }
+
     return states;
 }
 

@@ -1,9 +1,9 @@
 const calendars = new Map();
 function getCalendarStates(calendar) {
     const states = [];
-    const combo = calendar.closest('.combo-calendar');
-    if (combo) {
-        const moduleCalendars = Array.from(combo.querySelectorAll('.module-calendar'));
+    const parent = calendar.parentElement;
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars = Array.from(parent.querySelectorAll('.module-calendar'));
         moduleCalendars.forEach(moduleCalendar => {
             const childState = calendars.get(moduleCalendar);
             if (childState)
