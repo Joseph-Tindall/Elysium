@@ -13,9 +13,18 @@ interface CalendarState {
 
 const calendars: Map<HTMLElement, CalendarState> = new Map();
 
+function clearRange(calendar: HTMLElement): void {
+    const states: CalendarState[] = getCalendarStates(calendar);
+    states.forEach(state => {
+        state.dayCache.forEach(dayInfo => {
+            dayInfo.element.classList.remove("active", "range");
+        });
+    });
+}
+
 function getCalendarStates(calendar: HTMLElement): CalendarState[] {
     const states: CalendarState[] = [];
-    const parent: HTMLElement | null = calendar.parentElement;
+    const parent = calendar.parentElement;
 
     if (parent && parent.classList.contains('combo-calendar')) {
         const moduleCalendars: HTMLElement[] = Array.from(parent.querySelectorAll('.module-calendar'));
@@ -31,31 +40,23 @@ function getCalendarStates(calendar: HTMLElement): CalendarState[] {
     return states;
 }
 
-function clearRange(calendar: HTMLElement): void {
-    const states = getCalendarStates(calendar);
-    states.forEach(state => {
-        state.dayCache.forEach(dayInfo => {
-            dayInfo.element.classList.remove("active", "range");
-        });
-    });
-}
-
 function populateCalendar(calendar: HTMLElement, month: number, year: number): void {
-    const daysContainer = calendar.querySelector<HTMLElement>(".days");
+    const daysContainer: HTMLElement = calendar.querySelector(".days");
     if (!daysContainer) return;
 
     while (daysContainer.children.length > 7) {
         daysContainer.removeChild(daysContainer.lastChild!);
     }
 
-    const today = new Date();
-    const todayDate = today.getDate();
-    const todayMonth = today.getMonth();
-    const todayYear = today.getFullYear();
+    const today: Date = new Date();
+    const todayDate: number = today.getDate();
+    const todayMonth: number = today.getMonth();
+    const todayYear: number = today.getFullYear();
 
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const daysInMonth = lastDayOfMonth.getDate();
+
     const startDay = firstDayOfMonth.getDay();
 
     for (let i = 0; i < startDay; i++) {
@@ -83,12 +84,13 @@ function populateCalendar(calendar: HTMLElement, month: number, year: number): v
             dayCell.classList.add("today");
         }
 
-        if ((state.startDateRange && day === state.startDateRange.day && month === state.startDateRange.month && year === state.startDateRange.year) ||
-            (state.endDateRange && day === state.endDateRange.day && month === state.endDateRange.month && year === state.endDateRange.year)) {
+        if ((state.startDateRange != null && day === state.startDateRange.day && month === state.startDateRange.month && year === state.startDateRange.year)
+            || (state.endDateRange != null && day === state.endDateRange.day && month === state.endDateRange.month && year === state.endDateRange.year)) {
             dayCell.classList.add("active");
         }
 
         const dayDate = new Date(year, month, day);
+
         state.dayCache.push({ element: dayCell, date: dayDate });
 
         daysContainer.appendChild(dayCell);
@@ -104,7 +106,7 @@ function onDayClick(event: MouseEvent, calendar: HTMLElement): void {
     const day = parseInt(target.dataset.day!);
     const month = parseInt(target.dataset.month!);
     const year = parseInt(target.dataset.year!);
-    const states = getCalendarStates(calendar);
+    const states: CalendarState[] = getCalendarStates(calendar);
 
     states.forEach(state => {
         if (!state.startDateRange || state.endDateRange) {
@@ -127,7 +129,8 @@ function onDayClick(event: MouseEvent, calendar: HTMLElement): void {
 }
 
 function markRange(calendar: HTMLElement): void {
-    const states = getCalendarStates(calendar);
+    const states: CalendarState[] = getCalendarStates(calendar);
+
     states.forEach(state => {
         if (!state || !state.startDateRange || !state.endDateRange) return;
 
@@ -136,8 +139,8 @@ function markRange(calendar: HTMLElement): void {
 
         state.dayCache.forEach(dayInfo => {
             const currentDate = dayInfo.date;
-            if (currentDate >= startDate && currentDate <= endDate) {
-                dayInfo.element.classList.toggle('range', !dayInfo.element.classList.contains("active"));
+            if (currentDate >= startDate && currentDate <= endDate && !dayInfo.element.classList.contains("active")) {
+                dayInfo.element.classList.add('range');
             }
         });
     });
@@ -153,37 +156,119 @@ function updateMonthLabel(calendar: HTMLElement, month: number, year: number): v
 
 function updateNavigationButtons(calendar: HTMLElement): void {
     const today = new Date();
-    const prevButton = calendar.querySelector<HTMLButtonElement>(".prev-month");
-    const nextButton = calendar.querySelector<HTMLButtonElement>(".next-month");
+    const prevButton = calendar.querySelector(".prev-month") as HTMLButtonElement;
+    const nextButton = calendar.querySelector(".next-month") as HTMLButtonElement;
 
-    const state = calendars.get(calendar);
-    if (!state || !prevButton || !nextButton) return;
-
-    prevButton.disabled = false;
-    nextButton.disabled = (state.currentYear === today.getFullYear() && state.currentMonth === today.getMonth());
-
-    prevButton.style.opacity = "1";
-    nextButton.style.opacity = nextButton.disabled ? "0" : "1";
-}
-
-function changeMonth(calendar: HTMLElement, increment: number): void {
     const state = calendars.get(calendar);
     if (!state) return;
 
-    state.currentMonth += increment;
+    const parent = calendar.parentElement;
+    let firstCalendarState: CalendarState | null = null;
+    let secondCalendarState: CalendarState | null = null;
 
-    if (state.currentMonth > 11) {
-        state.currentMonth = 0;
-        state.currentYear++;
-    } else if (state.currentMonth < 0) {
-        state.currentMonth = 11;
-        state.currentYear--;
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars: HTMLElement[] = Array.from(parent.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            firstCalendarState = calendars.get(moduleCalendars[0]);
+            secondCalendarState = calendars.get(moduleCalendars[1]);
+        }
     }
 
-    const today = new Date();
+    prevButton.disabled = false;
+    nextButton.disabled = false;
+
+    if (firstCalendarState && secondCalendarState) {
+        if (secondCalendarState && state === secondCalendarState) {
+            nextButton.disabled = (state.currentYear === today.getFullYear() && state.currentMonth === today.getMonth());
+            prevButton.disabled = (state.currentYear === firstCalendarState.currentYear && state.currentMonth === firstCalendarState.currentMonth);
+        } else if (firstCalendarState && state === firstCalendarState) {
+            nextButton.disabled = (state.currentYear === secondCalendarState.currentYear && state.currentMonth === secondCalendarState.currentMonth);
+        }
+    }
+
+    prevButton.style.opacity = prevButton.disabled ? "0" : "1";
+    nextButton.style.opacity = nextButton.disabled ? "0" : "1";
+}
+
+function goToPreviousMonth(event: Event): void {
+    const button: HTMLElement = event.currentTarget as HTMLElement;
+    const calendar: HTMLElement = button.closest('.module-calendar');
+    if (!calendar) return;
+
+    const state: CalendarState = calendars.get(calendar);
+    if (!state) return;
+
+    const parent = calendar.parentElement;
+    let firstCalendarState: CalendarState | null = null;
+    let secondCalendarState: CalendarState | null = null;
+
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars: HTMLElement[] = Array.from(parent.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            firstCalendarState = calendars.get(moduleCalendars[0]);
+            secondCalendarState = calendars.get(moduleCalendars[1]);
+        }
+    }
+
+    if (state.currentMonth === 0) {
+        state.currentMonth = 11;
+        state.currentYear--;
+    } else {
+        state.currentMonth--;
+    }
+
+    if (secondCalendarState && state === secondCalendarState && (state.currentYear === firstCalendarState.currentYear && state.currentMonth === firstCalendarState.currentMonth)) {
+        if (state.currentMonth === 11) {
+            state.currentMonth = 0;
+            state.currentYear++;
+        } else {
+            state.currentMonth++;
+        }
+    }
+
+    populateCalendar(calendar, state.currentMonth, state.currentYear);
+}
+
+function goToNextMonth(event: Event): void {
+    const button: HTMLElement = event.currentTarget as HTMLElement;
+    const calendar: HTMLElement = button.closest('.module-calendar');
+    if (!calendar) return;
+
+    const state: CalendarState = calendars.get(calendar);
+    if (!state) return;
+
+    const today: Date = new Date();
+    const parent = calendar.parentElement;
+    let firstCalendarState: CalendarState | null = null;
+    let secondCalendarState: CalendarState | null = null;
+
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars: HTMLElement[] = Array.from(parent.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            firstCalendarState = calendars.get(moduleCalendars[0]);
+            secondCalendarState = calendars.get(moduleCalendars[1]);
+        }
+    }
+
+    if (state.currentMonth === 11) {
+        state.currentMonth = 0;
+        state.currentYear++;
+    } else {
+        state.currentMonth++;
+    }
+
     if (state.currentYear > today.getFullYear() || (state.currentYear === today.getFullYear() && state.currentMonth > today.getMonth())) {
         state.currentMonth = today.getMonth();
         state.currentYear = today.getFullYear();
+    }
+
+    if (firstCalendarState && state === firstCalendarState && (state.currentYear === secondCalendarState.currentYear && state.currentMonth === secondCalendarState.currentMonth)) {
+        if (state.currentMonth === 0) {
+            state.currentMonth = 11;
+            state.currentYear--;
+        } else {
+            state.currentMonth--;
+        }
     }
 
     populateCalendar(calendar, state.currentMonth, state.currentYear);
@@ -191,7 +276,7 @@ function changeMonth(calendar: HTMLElement, increment: number): void {
 
 document.addEventListener("DOMContentLoaded", (): void => {
     document.querySelectorAll('.module-calendar').forEach((calendar: HTMLElement) => {
-        const today = new Date();
+        const today: Date = new Date();
         const state: CalendarState = {
             currentMonth: today.getMonth(),
             currentYear: today.getFullYear(),
@@ -206,7 +291,24 @@ document.addEventListener("DOMContentLoaded", (): void => {
         const prevButton = calendar.querySelector(".prev-month");
         const nextButton = calendar.querySelector(".next-month");
 
-        prevButton?.addEventListener("click", () => changeMonth(calendar, -1));
-        nextButton?.addEventListener("click", () => changeMonth(calendar, 1));
+        prevButton?.addEventListener("click", goToPreviousMonth);
+        nextButton?.addEventListener("click", goToNextMonth);
+    });
+
+    document.querySelectorAll('.combo-calendar').forEach((combo: HTMLElement) => {
+        const moduleCalendars: HTMLElement[] = Array.from(combo.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            const today: Date = new Date();
+            const firstCalendarState: CalendarState = calendars.get(moduleCalendars[0]);
+            const secondCalendarState: CalendarState = calendars.get(moduleCalendars[1]);
+
+            firstCalendarState.currentMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
+            firstCalendarState.currentYear = today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
+            secondCalendarState.currentMonth = today.getMonth();
+            secondCalendarState.currentYear = today.getFullYear();
+
+            populateCalendar(moduleCalendars[0], firstCalendarState.currentMonth, firstCalendarState.currentYear);
+            populateCalendar(moduleCalendars[1], secondCalendarState.currentMonth, secondCalendarState.currentYear);
+        }
     });
 });

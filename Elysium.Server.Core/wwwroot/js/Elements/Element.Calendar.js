@@ -1,4 +1,12 @@
 const calendars = new Map();
+function clearRange(calendar) {
+    const states = getCalendarStates(calendar);
+    states.forEach(state => {
+        state.dayCache.forEach(dayInfo => {
+            dayInfo.element.classList.remove("active", "range");
+        });
+    });
+}
 function getCalendarStates(calendar) {
     const states = [];
     const parent = calendar.parentElement;
@@ -16,14 +24,6 @@ function getCalendarStates(calendar) {
             states.push(state);
     }
     return states;
-}
-function clearRange(calendar) {
-    const states = getCalendarStates(calendar);
-    states.forEach(state => {
-        state.dayCache.forEach(dayInfo => {
-            dayInfo.element.classList.remove("active", "range");
-        });
-    });
 }
 function populateCalendar(calendar, month, year) {
     const daysContainer = calendar.querySelector(".days");
@@ -59,8 +59,8 @@ function populateCalendar(calendar, month, year) {
         if (day === todayDate && month === todayMonth && year === todayYear) {
             dayCell.classList.add("today");
         }
-        if ((state.startDateRange && day === state.startDateRange.day && month === state.startDateRange.month && year === state.startDateRange.year) ||
-            (state.endDateRange && day === state.endDateRange.day && month === state.endDateRange.month && year === state.endDateRange.year)) {
+        if ((state.startDateRange != null && day === state.startDateRange.day && month === state.startDateRange.month && year === state.startDateRange.year)
+            || (state.endDateRange != null && day === state.endDateRange.day && month === state.endDateRange.month && year === state.endDateRange.year)) {
             dayCell.classList.add("active");
         }
         const dayDate = new Date(year, month, day);
@@ -104,8 +104,8 @@ function markRange(calendar) {
         const endDate = new Date(state.endDateRange.year, state.endDateRange.month, state.endDateRange.day);
         state.dayCache.forEach(dayInfo => {
             const currentDate = dayInfo.date;
-            if (currentDate >= startDate && currentDate <= endDate) {
-                dayInfo.element.classList.toggle('range', !dayInfo.element.classList.contains("active"));
+            if (currentDate >= startDate && currentDate <= endDate && !dayInfo.element.classList.contains("active")) {
+                dayInfo.element.classList.add('range');
             }
         });
     });
@@ -122,30 +122,106 @@ function updateNavigationButtons(calendar) {
     const prevButton = calendar.querySelector(".prev-month");
     const nextButton = calendar.querySelector(".next-month");
     const state = calendars.get(calendar);
-    if (!state || !prevButton || !nextButton)
+    if (!state)
         return;
+    const parent = calendar.parentElement;
+    let firstCalendarState = null;
+    let secondCalendarState = null;
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars = Array.from(parent.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            firstCalendarState = calendars.get(moduleCalendars[0]);
+            secondCalendarState = calendars.get(moduleCalendars[1]);
+        }
+    }
     prevButton.disabled = false;
-    nextButton.disabled = (state.currentYear === today.getFullYear() && state.currentMonth === today.getMonth());
-    prevButton.style.opacity = "1";
+    nextButton.disabled = false;
+    if (firstCalendarState && secondCalendarState) {
+        if (secondCalendarState && state === secondCalendarState) {
+            nextButton.disabled = (state.currentYear === today.getFullYear() && state.currentMonth === today.getMonth());
+            prevButton.disabled = (state.currentYear === firstCalendarState.currentYear && state.currentMonth === firstCalendarState.currentMonth);
+        }
+        else if (firstCalendarState && state === firstCalendarState) {
+            nextButton.disabled = (state.currentYear === secondCalendarState.currentYear && state.currentMonth === secondCalendarState.currentMonth);
+        }
+    }
+    prevButton.style.opacity = prevButton.disabled ? "0" : "1";
     nextButton.style.opacity = nextButton.disabled ? "0" : "1";
 }
-function changeMonth(calendar, increment) {
+function goToPreviousMonth(event) {
+    const button = event.currentTarget;
+    const calendar = button.closest('.module-calendar');
+    if (!calendar)
+        return;
     const state = calendars.get(calendar);
     if (!state)
         return;
-    state.currentMonth += increment;
-    if (state.currentMonth > 11) {
-        state.currentMonth = 0;
-        state.currentYear++;
+    const parent = calendar.parentElement;
+    let firstCalendarState = null;
+    let secondCalendarState = null;
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars = Array.from(parent.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            firstCalendarState = calendars.get(moduleCalendars[0]);
+            secondCalendarState = calendars.get(moduleCalendars[1]);
+        }
     }
-    else if (state.currentMonth < 0) {
+    if (state.currentMonth === 0) {
         state.currentMonth = 11;
         state.currentYear--;
     }
+    else {
+        state.currentMonth--;
+    }
+    if (secondCalendarState && state === secondCalendarState && (state.currentYear === firstCalendarState.currentYear && state.currentMonth === firstCalendarState.currentMonth)) {
+        if (state.currentMonth === 11) {
+            state.currentMonth = 0;
+            state.currentYear++;
+        }
+        else {
+            state.currentMonth++;
+        }
+    }
+    populateCalendar(calendar, state.currentMonth, state.currentYear);
+}
+function goToNextMonth(event) {
+    const button = event.currentTarget;
+    const calendar = button.closest('.module-calendar');
+    if (!calendar)
+        return;
+    const state = calendars.get(calendar);
+    if (!state)
+        return;
     const today = new Date();
+    const parent = calendar.parentElement;
+    let firstCalendarState = null;
+    let secondCalendarState = null;
+    if (parent && parent.classList.contains('combo-calendar')) {
+        const moduleCalendars = Array.from(parent.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            firstCalendarState = calendars.get(moduleCalendars[0]);
+            secondCalendarState = calendars.get(moduleCalendars[1]);
+        }
+    }
+    if (state.currentMonth === 11) {
+        state.currentMonth = 0;
+        state.currentYear++;
+    }
+    else {
+        state.currentMonth++;
+    }
     if (state.currentYear > today.getFullYear() || (state.currentYear === today.getFullYear() && state.currentMonth > today.getMonth())) {
         state.currentMonth = today.getMonth();
         state.currentYear = today.getFullYear();
+    }
+    if (firstCalendarState && state === firstCalendarState && (state.currentYear === secondCalendarState.currentYear && state.currentMonth === secondCalendarState.currentMonth)) {
+        if (state.currentMonth === 0) {
+            state.currentMonth = 11;
+            state.currentYear--;
+        }
+        else {
+            state.currentMonth--;
+        }
     }
     populateCalendar(calendar, state.currentMonth, state.currentYear);
 }
@@ -163,8 +239,22 @@ document.addEventListener("DOMContentLoaded", () => {
         populateCalendar(calendar, state.currentMonth, state.currentYear);
         const prevButton = calendar.querySelector(".prev-month");
         const nextButton = calendar.querySelector(".next-month");
-        prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener("click", () => changeMonth(calendar, -1));
-        nextButton === null || nextButton === void 0 ? void 0 : nextButton.addEventListener("click", () => changeMonth(calendar, 1));
+        prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener("click", goToPreviousMonth);
+        nextButton === null || nextButton === void 0 ? void 0 : nextButton.addEventListener("click", goToNextMonth);
+    });
+    document.querySelectorAll('.combo-calendar').forEach((combo) => {
+        const moduleCalendars = Array.from(combo.querySelectorAll('.module-calendar'));
+        if (moduleCalendars.length === 2) {
+            const today = new Date();
+            const firstCalendarState = calendars.get(moduleCalendars[0]);
+            const secondCalendarState = calendars.get(moduleCalendars[1]);
+            firstCalendarState.currentMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
+            firstCalendarState.currentYear = today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
+            secondCalendarState.currentMonth = today.getMonth();
+            secondCalendarState.currentYear = today.getFullYear();
+            populateCalendar(moduleCalendars[0], firstCalendarState.currentMonth, firstCalendarState.currentYear);
+            populateCalendar(moduleCalendars[1], secondCalendarState.currentMonth, secondCalendarState.currentYear);
+        }
     });
 });
 //# sourceMappingURL=Element.Calendar.js.map
