@@ -13,23 +13,24 @@ interface CalendarState {
 
 const calendars: Map<HTMLElement, CalendarState> = new Map();
 
-function clearRange(calendar: HTMLElement): void {
-    let states: CalendarState[] = [];
-
+function getCalendarStates(calendar: HTMLElement): CalendarState[] {
+    const states: CalendarState[] = [];
     const combo: HTMLElement | null = calendar.closest('.combo-calendar');
     if (combo) {
-        const moduleCalendars: HTMLElement[] = Array.from(combo.querySelectorAll(':scope > .module-calendar')) as HTMLElement[];
-
+        const moduleCalendars: HTMLElement[] = Array.from(combo.querySelectorAll('.module-calendar'));
         moduleCalendars.forEach(moduleCalendar => {
             const childState = calendars.get(moduleCalendar);
-            states.push(childState);
+            if (childState) states.push(childState);
         });
     } else {
         const state: CalendarState = calendars.get(calendar);
-        if (!state) return;
-        states.push(state);
+        if (state) states.push(state);
     }
+    return states;
+}
 
+function clearRange(calendar: HTMLElement): void {
+    const states = getCalendarStates(calendar);
     states.forEach(state => {
         state.dayCache.forEach(dayInfo => {
             dayInfo.element.classList.remove("active", "range");
@@ -38,22 +39,21 @@ function clearRange(calendar: HTMLElement): void {
 }
 
 function populateCalendar(calendar: HTMLElement, month: number, year: number): void {
-    const daysContainer: HTMLElement = calendar.querySelector(".days");
+    const daysContainer = calendar.querySelector<HTMLElement>(".days");
     if (!daysContainer) return;
 
     while (daysContainer.children.length > 7) {
         daysContainer.removeChild(daysContainer.lastChild!);
     }
 
-    const today: Date = new Date();
-    const todayDate: number = today.getDate();
-    const todayMonth: number = today.getMonth();
-    const todayYear: number = today.getFullYear();
+    const today = new Date();
+    const todayDate = today.getDate();
+    const todayMonth = today.getMonth();
+    const todayYear = today.getFullYear();
 
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const daysInMonth = lastDayOfMonth.getDate();
-
     const startDay = firstDayOfMonth.getDay();
 
     for (let i = 0; i < startDay; i++) {
@@ -81,13 +81,12 @@ function populateCalendar(calendar: HTMLElement, month: number, year: number): v
             dayCell.classList.add("today");
         }
 
-        if ((state.startDateRange != null && day === state.startDateRange.day && month === state.startDateRange.month && year === state.startDateRange.year)
-            || (state.endDateRange != null && day === state.endDateRange.day && month === state.endDateRange.month && year === state.endDateRange.year)) {
+        if ((state.startDateRange && day === state.startDateRange.day && month === state.startDateRange.month && year === state.startDateRange.year) ||
+            (state.endDateRange && day === state.endDateRange.day && month === state.endDateRange.month && year === state.endDateRange.year)) {
             dayCell.classList.add("active");
         }
 
         const dayDate = new Date(year, month, day);
-
         state.dayCache.push({ element: dayCell, date: dayDate });
 
         daysContainer.appendChild(dayCell);
@@ -103,21 +102,7 @@ function onDayClick(event: MouseEvent, calendar: HTMLElement): void {
     const day = parseInt(target.dataset.day!);
     const month = parseInt(target.dataset.month!);
     const year = parseInt(target.dataset.year!);
-    let states: CalendarState[] = [];
-
-    const combo: HTMLElement | null = calendar.closest('.combo-calendar');
-    if (combo) {
-        const moduleCalendars: HTMLElement[] = Array.from(combo.querySelectorAll(':scope > .module-calendar')) as HTMLElement[];
-
-        moduleCalendars.forEach(moduleCalendar => {
-            const childState = calendars.get(moduleCalendar);
-            states.push(childState);
-        });
-    } else {
-        const state = calendars.get(calendar);
-        if (!state) return;
-        states.push(state);
-    }
+    const states = getCalendarStates(calendar);
 
     states.forEach(state => {
         if (!state.startDateRange || state.endDateRange) {
@@ -140,17 +125,19 @@ function onDayClick(event: MouseEvent, calendar: HTMLElement): void {
 }
 
 function markRange(calendar: HTMLElement): void {
-    const state = calendars.get(calendar);
-    if (!state || !state.startDateRange || !state.endDateRange) return;
+    const states = getCalendarStates(calendar);
+    states.forEach(state => {
+        if (!state || !state.startDateRange || !state.endDateRange) return;
 
-    const startDate = new Date(state.startDateRange.year, state.startDateRange.month, state.startDateRange.day);
-    const endDate = new Date(state.endDateRange.year, state.endDateRange.month, state.endDateRange.day);
+        const startDate = new Date(state.startDateRange.year, state.startDateRange.month, state.startDateRange.day);
+        const endDate = new Date(state.endDateRange.year, state.endDateRange.month, state.endDateRange.day);
 
-    state.dayCache.forEach(dayInfo => {
-        const currentDate = dayInfo.date;
-        if (currentDate >= startDate && currentDate <= endDate && !dayInfo.element.classList.contains("active")) {
-            dayInfo.element.classList.add('range');
-        }
+        state.dayCache.forEach(dayInfo => {
+            const currentDate = dayInfo.date;
+            if (currentDate >= startDate && currentDate <= endDate) {
+                dayInfo.element.classList.toggle('range', !dayInfo.element.classList.contains("active"));
+            }
+        });
     });
 }
 
@@ -164,11 +151,11 @@ function updateMonthLabel(calendar: HTMLElement, month: number, year: number): v
 
 function updateNavigationButtons(calendar: HTMLElement): void {
     const today = new Date();
-    const prevButton = calendar.querySelector(".prev-month") as HTMLButtonElement;
-    const nextButton = calendar.querySelector(".next-month") as HTMLButtonElement;
+    const prevButton = calendar.querySelector<HTMLButtonElement>(".prev-month");
+    const nextButton = calendar.querySelector<HTMLButtonElement>(".next-month");
 
     const state = calendars.get(calendar);
-    if (!state) return;
+    if (!state || !prevButton || !nextButton) return;
 
     prevButton.disabled = false;
     nextButton.disabled = (state.currentYear === today.getFullYear() && state.currentMonth === today.getMonth());
@@ -177,40 +164,21 @@ function updateNavigationButtons(calendar: HTMLElement): void {
     nextButton.style.opacity = nextButton.disabled ? "0" : "1";
 }
 
-function goToPreviousMonth(event: Event): void {
-    const button: HTMLElement = event.currentTarget as HTMLElement;
-    const calendar: HTMLElement = button.closest('.module-calendar');
-    if (!calendar) return;
-
-    const state: CalendarState = calendars.get(calendar);
+function changeMonth(calendar: HTMLElement, increment: number): void {
+    const state = calendars.get(calendar);
     if (!state) return;
 
-    if (state.currentMonth === 0) {
-        state.currentMonth = 11;
-        state.currentYear--;
-    } else {
-        state.currentMonth--;
-    }
+    state.currentMonth += increment;
 
-    populateCalendar(calendar, state.currentMonth, state.currentYear);
-}
-
-function goToNextMonth(event: Event): void {
-    const button: HTMLElement = event.currentTarget as HTMLElement;
-    const calendar: HTMLElement = button.closest('.module-calendar');
-    if (!calendar) return;
-
-    const state: CalendarState = calendars.get(calendar);
-    if (!state) return;
-
-    const today: Date = new Date();
-    if (state.currentMonth === 11) {
+    if (state.currentMonth > 11) {
         state.currentMonth = 0;
         state.currentYear++;
-    } else {
-        state.currentMonth++;
+    } else if (state.currentMonth < 0) {
+        state.currentMonth = 11;
+        state.currentYear--;
     }
 
+    const today = new Date();
     if (state.currentYear > today.getFullYear() || (state.currentYear === today.getFullYear() && state.currentMonth > today.getMonth())) {
         state.currentMonth = today.getMonth();
         state.currentYear = today.getFullYear();
@@ -221,7 +189,7 @@ function goToNextMonth(event: Event): void {
 
 document.addEventListener("DOMContentLoaded", (): void => {
     document.querySelectorAll('.module-calendar').forEach((calendar: HTMLElement) => {
-        const today: Date = new Date();
+        const today = new Date();
         const state: CalendarState = {
             currentMonth: today.getMonth(),
             currentYear: today.getFullYear(),
@@ -236,7 +204,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         const prevButton = calendar.querySelector(".prev-month");
         const nextButton = calendar.querySelector(".next-month");
 
-        prevButton?.addEventListener("click", goToPreviousMonth);
-        nextButton?.addEventListener("click", goToNextMonth);
+        prevButton?.addEventListener("click", () => changeMonth(calendar, -1));
+        nextButton?.addEventListener("click", () => changeMonth(calendar, 1));
     });
 });

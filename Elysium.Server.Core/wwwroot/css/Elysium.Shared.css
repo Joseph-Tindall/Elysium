@@ -2,6 +2,7 @@
 @import url(Elysium.Navigation.css);
 @import url(Elysium.Guide.css);
 @import url(Elysium.Main.css);
+@import url(Elements/Element.Calendar.css);
 
 .left-content {
   display: flex;
@@ -74,9 +75,9 @@ elysium-app {
   --light-theme-active-opacity: 0.3;
   
   --dark-theme-accent-color: #ae9fdb;
-  --dark-theme-background-primary: #2b2b2b;
+  --dark-theme-background-primary: #292929;
   --dark-theme-background-secondary: #212121;
-  --dark-theme-background-tertiary: #292929;
+  --dark-theme-background-tertiary: #424242;
   --dark-theme-background-quaternary: #303030;
   --dark-theme-border-primary: #1c1c1c;
   --dark-theme-border-secondary: #292929;
@@ -179,77 +180,4 @@ elysium-app {
 
 .checkbox:has([type="checkbox"]):hover .material-symbols-rounded::before {
   background-color: rgba(var(--primary-highlight-color), var(--primary-hover-opacity));
-}
-
-.combo-calendar {
-  display: flex;
-  flex-direction: row;
-  width: fit-content;
-  border-radius: 10px;
-  background-color: var(--primary-background-tertiary);
-  border: 1px solid var(--primary-border-color-quaternary);
-}
-
-.module-calendar {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.module-calendar .days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  width: fit-content;
-  gap: 5px;
-}
-
-.module-calendar .calendar-month-selector {
-  height: 32px;
-  display: flex;
-  border: 1px solid var(--primary-border-color-quaternary);
-  box-shadow: var(--common-box-shadow);
-  margin-bottom: 10px;
-  border-radius: 6px;
-  line-height: 32px;
-}
-
-.module-calendar .calendar-month-selector > span {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.module-calendar .calendar-month-selector .prev-month,
-.module-calendar .calendar-month-selector .next-month {
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-}
-
-.module-calendar .calendar-month-selector .material-symbols-outlined {
-  font-size: 16px;
-  padding: 0 8px;
-  font-variation-settings: "wdth" 50, "wght" 300;
-  color: var(--primary-text-color)
-}
-
-.module-calendar .day {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  border-radius: 5px;
-}
-
-.module-calendar .day.active {
-  background-color: var(--primary-accent-color);
-}
-
-.module-calendar .day.range {
-  background-color: var(--primary-background-quaternary);
-}
-
-.module-calendar .day.today {
-  outline: 2px solid var(--primary-border-color-tertiary);
 }
