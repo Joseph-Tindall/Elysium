@@ -15,7 +15,7 @@ export class Calendar {
     }
     populateCalendar(month, year) {
         const { calendar } = this.state;
-        const daysContainer = calendar.querySelector(".days");
+        const daysContainer = calendar.querySelector('.days');
         if (!daysContainer)
             return;
         while (daysContainer.children.length > 7) {
@@ -30,24 +30,24 @@ export class Calendar {
         const daysInMonth = lastDayOfMonth.getDate();
         const startDay = firstDayOfMonth.getDay();
         for (let i = 0; i < startDay; i++) {
-            const emptyCell = document.createElement("div");
+            const emptyCell = document.createElement('div');
             daysContainer.appendChild(emptyCell);
         }
         this.state.dayCache.length = 0;
         for (let day = 1; day <= daysInMonth; day++) {
-            const dayCell = document.createElement("div");
-            dayCell.className = "day";
+            const dayCell = document.createElement('div');
+            dayCell.className = 'day';
             dayCell.textContent = day.toString();
             dayCell.dataset.day = day.toString();
             dayCell.dataset.month = month.toString();
             dayCell.dataset.year = year.toString();
             dayCell.addEventListener('click', (event) => this.onDayClick(event));
             if (day === todayDate && month === todayMonth && year === todayYear) {
-                dayCell.classList.add("today");
+                dayCell.classList.add('today');
             }
             if (this.state.startDateRange && day === this.state.startDateRange.day && month === this.state.startDateRange.month && year === this.state.startDateRange.year
                 || this.state.endDateRange && day === this.state.endDateRange.day && month === this.state.endDateRange.month && year === this.state.endDateRange.year) {
-                dayCell.classList.add("active");
+                dayCell.classList.add('active');
             }
             this.state.dayCache.push({ element: dayCell, date: new Date(year, month, day) });
             daysContainer.appendChild(dayCell);
@@ -68,7 +68,7 @@ export class Calendar {
             const startDate = new Date(startDateRange.year, startDateRange.month, startDateRange.day);
             const endDate = new Date(endDateRange.year, endDateRange.month, endDateRange.day);
             dayCache.forEach((dayInfo) => {
-                if (dayInfo.date >= startDate && dayInfo.date <= endDate && !dayInfo.element.classList.contains("active")) {
+                if (dayInfo.date >= startDate && dayInfo.date <= endDate && !dayInfo.element.classList.contains('active')) {
                     dayInfo.element.classList.add('range');
                 }
             });

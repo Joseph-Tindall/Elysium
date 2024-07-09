@@ -4,10 +4,10 @@ export function initializeCalendars() {
         const calendar = new Calendar(calendarElement);
         Calendar.calendars.set(calendarElement, calendar.state);
         calendar.populateCalendar(calendar.state.currentMonth, calendar.state.currentYear);
-        const prevButton = calendarElement.querySelector(".prev-month");
-        const nextButton = calendarElement.querySelector(".next-month");
-        prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener("click", () => calendar.goToPreviousMonth());
-        nextButton === null || nextButton === void 0 ? void 0 : nextButton.addEventListener("click", () => calendar.goToNextMonth());
+        const prevButton = calendarElement.querySelector('.prev-month');
+        const nextButton = calendarElement.querySelector('.next-month');
+        prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener('click', () => calendar.goToPreviousMonth());
+        nextButton === null || nextButton === void 0 ? void 0 : nextButton.addEventListener('click', () => calendar.goToNextMonth());
     });
     document.querySelectorAll('.combo-calendar').forEach((combo) => {
         const moduleCalendars = Array.from(combo.querySelectorAll('.module-calendar'));

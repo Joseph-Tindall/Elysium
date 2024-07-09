@@ -13,14 +13,14 @@ export function clearRange(states) {
     });
 }
 export function updateMonthLabel(calendar, month, year, MONTH_NAMES) {
-    const label = calendar.querySelector(".calendar-month-label");
+    const label = calendar.querySelector('.calendar-month-label');
     if (label) {
         label.textContent = `${MONTH_NAMES[month]} ${year}`;
     }
 }
 export function updateNavigationButtons(state, today, calendars) {
-    const prevButton = state.calendar.querySelector(".prev-month");
-    const nextButton = state.calendar.querySelector(".next-month");
+    const prevButton = state.calendar.querySelector('.prev-month');
+    const nextButton = state.calendar.querySelector('.next-month');
     const parent = state.calendar.parentElement;
     let firstCalendarState = null;
     let secondCalendarState = null;
@@ -44,7 +44,7 @@ export function updateNavigationButtons(state, today, calendars) {
                 || (state.currentMonth === secondCalendarState.currentMonth - 1 && state.currentYear === secondCalendarState.currentYear);
         }
     }
-    prevButton.style.opacity = prevButton.disabled ? "0" : "1";
-    nextButton.style.opacity = nextButton.disabled ? "0" : "1";
+    prevButton.style.opacity = prevButton.disabled ? '0' : '1';
+    nextButton.style.opacity = nextButton.disabled ? '0' : '1';
 }
 //# sourceMappingURL=Utilities.js.map

@@ -17,15 +17,15 @@ export function clearRange(states: CalendarState[]): void {
 }
 
 export function updateMonthLabel(calendar: HTMLElement, month: number, year: number, MONTH_NAMES: string[]): void {
-    const label: HTMLElement = calendar.querySelector(".calendar-month-label");
+    const label: HTMLElement = calendar.querySelector('.calendar-month-label');
     if (label) {
         label.textContent = `${MONTH_NAMES[month]} ${year}`;
     }
 }
 
 export function updateNavigationButtons(state: CalendarState, today: Date, calendars: Map<HTMLElement, CalendarState>): void {
-    const prevButton: HTMLButtonElement = state.calendar.querySelector(".prev-month") as HTMLButtonElement;
-    const nextButton: HTMLButtonElement = state.calendar.querySelector(".next-month") as HTMLButtonElement;
+    const prevButton: HTMLButtonElement = state.calendar.querySelector('.prev-month') as HTMLButtonElement;
+    const nextButton: HTMLButtonElement = state.calendar.querySelector('.next-month') as HTMLButtonElement;
 
     const parent: HTMLElement = state.calendar.parentElement;
     let firstCalendarState: CalendarState | null = null;
@@ -53,6 +53,6 @@ export function updateNavigationButtons(state: CalendarState, today: Date, calen
         }
     }
 
-    prevButton.style.opacity = prevButton.disabled ? "0" : "1";
-    nextButton.style.opacity = nextButton.disabled ? "0" : "1";
+    prevButton.style.opacity = prevButton.disabled ? '0' : '1';
+    nextButton.style.opacity = nextButton.disabled ? '0' : '1';
 }

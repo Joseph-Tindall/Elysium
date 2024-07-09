@@ -1,5 +1,5 @@
 ﻿import { Calendar } from './States.js';
-import { CalendarState } from "./Interfaces.js";
+import { CalendarState } from './Interfaces.js';
 
 export function initializeCalendars(): void {
     document.querySelectorAll('.module-calendar').forEach((calendarElement: HTMLElement) => {
@@ -8,11 +8,11 @@ export function initializeCalendars(): void {
 
         calendar.populateCalendar(calendar.state.currentMonth, calendar.state.currentYear);
 
-        const prevButton: HTMLButtonElement = calendarElement.querySelector(".prev-month");
-        const nextButton: HTMLButtonElement = calendarElement.querySelector(".next-month");
+        const prevButton: HTMLButtonElement = calendarElement.querySelector('.prev-month');
+        const nextButton: HTMLButtonElement = calendarElement.querySelector('.next-month');
 
-        prevButton?.addEventListener("click", () => calendar.goToPreviousMonth());
-        nextButton?.addEventListener("click", () => calendar.goToNextMonth());
+        prevButton?.addEventListener('click', () => calendar.goToPreviousMonth());
+        nextButton?.addEventListener('click', () => calendar.goToNextMonth());
     });
 
     document.querySelectorAll('.combo-calendar').forEach((combo: HTMLElement) => {
