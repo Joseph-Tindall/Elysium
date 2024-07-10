@@ -68,7 +68,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <TypeScriptCompile Remove="Scripts\Elements\Interfaces.ts" />
+      <TypeScriptCompile Remove="Scripts\Elements\Day.ts" />
       <TypeScriptCompile Remove="Scripts\Elements\Calendar.ts" />
     </ItemGroup>
 

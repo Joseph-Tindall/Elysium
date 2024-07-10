@@ -9,19 +9,41 @@ calendar.date-picker {
     grid-gap: 7px;
 }
 
-calendar.date-picker day:first-of-type {
-    grid-column-start: 1;
+calendar.date-picker day,
+calendar.date-picker day > button {
+    border-radius: 5px;
 }
 
-calendar.date-picker day {
+calendar.date-picker day > button {
     --squared: 30px;
     
+    text-align: center;
+    color: var(--color);
     width: var(--squared);
     height: var(--squared);
-    border-radius: 5px;
-    text-align: center;
+    border: 1px solid transparent;
+    background-color: transparent;
     line-height: calc(var(--squared) - 2px);
+}
+
+calendar.date-picker day > button.clickable {
+    cursor: pointer;
+}
+
+calendar.date-picker day.today {
+    outline: 1px solid #7D7D7D;
+}
+
+calendar.date-picker day.selected > button {
+    background-color: var(--action-color-highlight);
+}
+
+calendar.date-picker day.ranged > button {
     background-color: #424242;
+}
+
+calendar.date-picker day.ranged > button,
+calendar.date-picker day.selected > button {
+    border-color: rgba(0, 0, 0, 0.1);
     box-shadow: var(--box-shadow);
-    border: 1px solid rgba(0, 0, 0, 0.1);
 }
