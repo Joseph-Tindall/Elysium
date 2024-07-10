@@ -38,11 +38,11 @@ calendar.date-picker day.selected > button {
     background-color: var(--action-color-highlight);
 }
 
-calendar.date-picker day.ranged > button {
+calendar.date-picker day.in-selection > button {
     background-color: #424242;
 }
 
-calendar.date-picker day.ranged > button,
+calendar.date-picker day.in-selection > button,
 calendar.date-picker day.selected > button {
     border-color: rgba(0, 0, 0, 0.1);
     box-shadow: var(--box-shadow);

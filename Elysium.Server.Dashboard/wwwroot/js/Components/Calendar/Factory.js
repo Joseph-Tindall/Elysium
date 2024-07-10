@@ -3,6 +3,7 @@ import { Day } from "./Day.js";
 import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
 export class Calendar {
     constructor(initialDate, interactions = EInteractions.None, allowRange = false, type) {
+        this.allDaysCache = [];
         this.selectedDays = [];
         this.cycle = 0;
         this.element = this.createHtmlElement(type);
@@ -40,6 +41,7 @@ export class Calendar {
             if (dayDate === today)
                 dayElement.classList.add('today');
             this.element.appendChild(dayElement);
+            this.allDaysCache.push(dayElement);
         }
         const firstDayOfMonth = this.element.querySelector('day');
         if (firstDayOfMonth)
@@ -48,6 +50,7 @@ export class Calendar {
     removeDays() {
         const dayElements = this.element.querySelectorAll('day');
         dayElements.forEach((dayElement) => dayElement.remove());
+        this.allDaysCache = [];
     }
     onDayClick(event) {
         const dayButton = event.currentTarget;
@@ -66,6 +69,21 @@ export class Calendar {
             [this.selectedDays[0], this.selectedDays[1]] = [this.selectedDays[1], this.selectedDays[0]];
         }
         dayElement.classList.add('selected');
+        if (this.selectedDays[0] && this.selectedDays[1])
+            this.highlightDayRange();
+    }
+    highlightDayRange() {
+        this.allDaysCache.forEach((day) => {
+            const dayButton = day.querySelector('button');
+            const dayDate = Number(dayButton.querySelector('span').innerHTML);
+            const date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
+            if (date > this.selectedDays[0].date && date < this.selectedDays[1].date) {
+                day.classList.add('in-selection');
+            }
+            else {
+                day.classList.remove('in-selection');
+            }
+        });
     }
 }
 //# sourceMappingURL=Factory.js.map
