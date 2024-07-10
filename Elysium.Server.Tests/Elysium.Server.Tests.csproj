@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Elysium.Server.Core\Elysium.Server.Core.csproj" />
+      <ProjectReference Include="..\Elysium.Server.Presentation\Elysium.Server.Presentation.csproj" />
     </ItemGroup>
 
 </Project>

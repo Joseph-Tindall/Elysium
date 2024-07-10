@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elysium.Server.Tests", "Elysium.Server.Tests\Elysium.Server.Tests.csproj", "{F74269FC-37D8-4366-9304-5BC9D5092D01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elysium.Server.Core", "Elysium.Server.Core\Elysium.Server.Core.csproj", "{E1622138-BCE0-4A2C-97B6-B8042223D464}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elysium.Server.Presentation", "Elysium.Server.Presentation\Elysium.Server.Presentation.csproj", "{E1622138-BCE0-4A2C-97B6-B8042223D464}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
