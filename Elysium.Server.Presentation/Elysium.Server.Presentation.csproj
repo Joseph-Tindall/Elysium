@@ -68,6 +68,12 @@
 
     <ItemGroup>
       <TypeScriptCompile Remove="Scripts\Elements\Interfaces.ts" />
+      <TypeScriptCompile Remove="Scripts\Elements\Calendar.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\css\Components\Calendar.css" />
+      <None Include="wwwroot\css\Components\DatePicker.css" />
     </ItemGroup>
 
 </Project>

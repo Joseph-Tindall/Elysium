@@ -1,6 +1,4 @@
-﻿
-
-export class Calendar
+﻿export class Calendar
 {
     public element: HTMLElement;
     
