@@ -1,10 +1,11 @@
 import { Module } from './Module/Factory.js';
-function generateCalendar() {
-    customElements.define('elysium-module', Module);
-    const moduleInstance = document.createElement('elysium-module');
-    document.body.appendChild(moduleInstance);
+import { Calendar } from './Calendar/Factory.js';
+function createDatePicker(initialDate = new Date()) {
+    const module = new Module();
+    const calendar = new Calendar(initialDate, 'date-picker');
+    module.element.appendChild(calendar.element);
 }
 document.addEventListener('DOMContentLoaded', () => {
-    generateCalendar();
+    createDatePicker();
 });
 //# sourceMappingURL=DatePicker.js.map

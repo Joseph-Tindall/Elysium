@@ -1,24 +1,17 @@
-﻿export class Module extends HTMLElement
+﻿export class Module
 {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(this.generateHtmlElement());
+    public element: HTMLElement;
+    
+    constructor(parent: HTMLElement = document.body) {
+        this.element = this.createHtmlElement(parent);
         return this;
     }
     
-    private generateHtmlElement(): HTMLElement {
+    private createHtmlElement(parent: HTMLElement): HTMLElement {
         const element: HTMLElement = document.createElement('module');
         element.classList.add('container');
         element.innerHTML = `<div class="content"><slot></slot></div>`;
+        parent.appendChild(element);
         return element;
-    }
-
-    connectedCallback(): void {
-        // Additional initialization if needed
-    }
-
-    disconnectedCallback(): void {
-        // Cleanup if needed
     }
 }

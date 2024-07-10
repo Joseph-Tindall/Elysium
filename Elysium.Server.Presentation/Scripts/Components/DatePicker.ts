@@ -1,11 +1,13 @@
 ﻿import { Module } from './Module/Factory.js';
+import { Calendar } from './Calendar/Factory.js';
 
-function generateCalendar(): void {
-    customElements.define('elysium-module', Module);
-    const moduleInstance: HTMLElement = document.createElement('elysium-module');
-    document.body.appendChild(moduleInstance);
+function createDatePicker(initialDate: Date = new Date()): void {
+    const module: Module = new Module();
+    const calendar: Calendar = new Calendar(initialDate, 'date-picker');
+
+    module.element.appendChild(calendar.element);
 }
 
 document.addEventListener('DOMContentLoaded', (): void => {
-    generateCalendar();
+    createDatePicker();
 });

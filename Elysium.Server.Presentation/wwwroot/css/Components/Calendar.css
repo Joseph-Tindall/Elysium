@@ -1,0 +1,27 @@
+﻿calendar {
+    color: #FFF;
+    font-size: 15px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+calendar.date-picker {
+    grid-gap: 7px;
+}
+
+calendar.date-picker day:first-of-type {
+    grid-column-start: 1;
+}
+
+calendar.date-picker day {
+    --squared: 30px;
+    
+    width: var(--squared);
+    height: var(--squared);
+    border-radius: 5px;
+    text-align: center;
+    line-height: calc(var(--squared) - 2px);
+    background-color: #424242;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}

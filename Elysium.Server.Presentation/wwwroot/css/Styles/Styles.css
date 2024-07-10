@@ -1,4 +1,18 @@
-﻿body {
-    color: #C2C2C2;
-    background-color: #212121;
+﻿:root {
+    --box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5); 
+    --color: #C2C2C2;
+    --border-color: #3B3B3B;
+    --background-color: #212121;
+    --foreground-color: #292929;
+    --action-color: #246BFC;
+    --action-color-highlight: #2A83FF;
+}
+
+body {
+    --backshadow: rgba(0, 0, 0, 0.3);
+    color: var(--color);
+    text-shadow: 1px 1px 0 var(--backshadow), -1px 1px 0 var(--backshadow),
+                -1px -1px 0 var(--backshadow), 1px -1px 0 var(--backshadow);
+    background-color: var(--background-color);
+    font-family: "Open Sans", sans-serif;
 }

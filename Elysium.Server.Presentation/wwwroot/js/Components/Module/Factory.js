@@ -1,21 +1,14 @@
-export class Module extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(this.generateHtmlElement());
+export class Module {
+    constructor(parent = document.body) {
+        this.element = this.createHtmlElement(parent);
         return this;
     }
-    generateHtmlElement() {
+    createHtmlElement(parent) {
         const element = document.createElement('module');
         element.classList.add('container');
         element.innerHTML = `<div class="content"><slot></slot></div>`;
+        parent.appendChild(element);
         return element;
-    }
-    connectedCallback() {
-        // Additional initialization if needed
-    }
-    disconnectedCallback() {
-        // Cleanup if needed
     }
 }
 //# sourceMappingURL=Factory.js.map
