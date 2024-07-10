@@ -1,26 +1,23 @@
-﻿import { CalendarState, DayInfo, MONTH_NAMES } from './Interfaces.js';
+﻿import { CalendarState, DateRange, DayInfo, MONTH_NAMES } from './Interfaces.js';
 import { getCalendarStates, clearRange, updateMonthLabel, updateNavigationButtons } from './Utilities.js';
 
 export class Calendar {
     private readonly calendar: HTMLElement;
-    public readonly state: CalendarState;
+    public state: CalendarState;
+    public currentMonth: number;
+    public currentYear: number;
+    public startDateRange: DateRange;
+    public endDateRange: DateRange;
+    public dayCache: DayInfo[];
 
     constructor(calendar: HTMLElement) {
         const today: Date = new Date();
-        this.state = {
-            calendar: calendar,
-            currentMonth: today.getMonth(),
-            currentYear: today.getFullYear(),
-            startDateRange: null,
-            endDateRange: null,
-            dayCache: []
-        };
-
         this.calendar = calendar;
+        
+        return this;
     }
 
-    public populateCalendar(month: number, year: number): void {
-        const { calendar } = this.state;
+    public populateCalendar(calendar: HTMLElement, month: number, year: number): void {
         const daysContainer: HTMLElement = calendar.querySelector('.days');
         if (!daysContainer) return;
 
@@ -43,7 +40,7 @@ export class Calendar {
             daysContainer.appendChild(emptyCell);
         }
 
-        this.state.dayCache.length = 0;
+        this.dayCache.length = 0;
         for (let day: number = 1; day <= daysInMonth; day++) {
             const dayCell: HTMLDivElement = document.createElement('div');
             dayCell.className = 'day';
@@ -73,24 +70,27 @@ export class Calendar {
         });
         
         updateMonthLabel(calendar, month, year, MONTH_NAMES);
-        this.markRange();
+        this.markRange(this.state.startDateRange, this.state.endDateRange, this.state.dayCache);
     }
 
-    private markRange(): void {
-        const states: CalendarState[] = getCalendarStates(this.calendar, Calendar.calendars);
+    public markRange(startDateRange: DateRange, endDateRange: DateRange, dayCache: DayInfo[]): void {
+        console.log("startDateRange:", startDateRange);
+        console.log("endDateRange:", endDateRange);
 
-        states.forEach((state: CalendarState): void => {
-            const { startDateRange, endDateRange, dayCache } = state;
-            if (!startDateRange || !endDateRange) return;
+        if (!startDateRange || !endDateRange) return;
 
-            const startDate: Date = new Date(startDateRange.year, startDateRange.month, startDateRange.day);
-            const endDate: Date = new Date(endDateRange.year, endDateRange.month, endDateRange.day);
+        const startDate: Date = new Date(startDateRange.year, startDateRange.month, startDateRange.day);
+        const endDate: Date = new Date(endDateRange.year, endDateRange.month, endDateRange.day);
 
-            dayCache.forEach((dayInfo: DayInfo): void => {
-                if (dayInfo.date >= startDate && dayInfo.date <= endDate && !dayInfo.element.classList.contains('active')) {
-                    dayInfo.element.classList.add('range');
-                }
-            });
+        console.log("Start Date:", startDate);
+        console.log("End Date:", endDate);
+
+        dayCache.forEach((dayInfo: DayInfo): void => {
+            const currentDate: Date = new Date(dayInfo.date);
+
+            if (currentDate >= startDate && currentDate <= endDate && !dayInfo.element.classList.contains("active")) {
+                dayInfo.element.classList.add('range');
+            }
         });
     }
 
@@ -102,19 +102,21 @@ export class Calendar {
 
         const states: CalendarState[] = getCalendarStates(this.calendar, Calendar.calendars);
 
-        states.forEach(state => {
+        states.forEach((state: CalendarState): void => {
             if (!state.startDateRange || state.endDateRange) {
-                clearRange(states);
+                clearRange(state.dayCache);
                 state.startDateRange = { day, month, year };
+                console.log("Set startDateRange to:", state.startDateRange);
                 state.endDateRange = null;
                 target.classList.add('active');
             } else {
                 state.endDateRange = { day, month, year };
+                console.log("Set endDateRange to:", state.endDateRange);
                 if (new Date(year, month, day) < new Date(state.startDateRange.year, state.startDateRange.month, state.startDateRange.day)) {
                     [state.startDateRange, state.endDateRange] = [state.endDateRange, state.startDateRange];
                 }
                 target.classList.add('active');
-                this.markRange();
+                this.markRange(state.startDateRange, state.endDateRange, state.dayCache);
             }
         });
     }
@@ -150,7 +152,7 @@ export class Calendar {
             }
         }
 
-        this.populateCalendar(this.state.currentMonth, this.state.currentYear);
+        this.populateCalendar(this.state.calendar, this.state.currentMonth, this.state.currentYear);
     }
 
     public goToNextMonth(): void {
@@ -190,7 +192,7 @@ export class Calendar {
             }
         }
 
-        this.populateCalendar(this.state.currentMonth, this.state.currentYear);
+        this.populateCalendar(this.state.calendar, this.state.currentMonth, this.state.currentYear);
     }
 
     static calendars: Map<HTMLElement, CalendarState> = new Map<HTMLElement, CalendarState>();

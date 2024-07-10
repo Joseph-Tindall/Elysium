@@ -7,9 +7,10 @@ export function getCalendarStates(calendar, calendars) {
     }
     return [calendars.get(calendar)].filter(Boolean);
 }
-export function clearRange(states) {
-    states.forEach((state) => {
-        state.dayCache.forEach((dayInfo) => dayInfo.element.classList.remove('active', 'range'));
+export function clearRange(dayCache) {
+    dayCache.forEach((dayInfo) => {
+        console.log("Class list:", dayInfo.element.classList);
+        dayInfo.element.classList.remove('active', 'range');
     });
 }
 export function updateMonthLabel(calendar, month, year, MONTH_NAMES) {

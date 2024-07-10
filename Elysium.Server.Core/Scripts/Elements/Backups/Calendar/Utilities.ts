@@ -10,9 +10,10 @@ export function getCalendarStates(calendar: HTMLElement, calendars: Map<HTMLElem
     return [calendars.get(calendar)].filter(Boolean) as CalendarState[];
 }
 
-export function clearRange(states: CalendarState[]): void {
-    states.forEach((state: CalendarState): void => {
-        state.dayCache.forEach((dayInfo: DayInfo) => dayInfo.element.classList.remove('active', 'range'));
+export function clearRange(dayCache: DayInfo[]): void {
+    dayCache.forEach((dayInfo: DayInfo) => {
+        console.log("Class list:", dayInfo.element.classList);
+        dayInfo.element.classList.remove('active', 'range');
     });
 }
 

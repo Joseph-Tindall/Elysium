@@ -2,7 +2,7 @@
 @import url(Elysium.Navigation.css);
 @import url(Elysium.Guide.css);
 @import url(Elysium.Main.css);
-@import url(Elements/Element.Calendar.css);
+@import url(Elements/Calendar.css);
 
 .left-content {
   display: flex;

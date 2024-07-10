@@ -42,6 +42,12 @@
       <_ContentIncludedByDefault Remove="Views\Conditions\Scripts\Index.cshtml" />
       <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\Interfaces.js" />
       <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\Interfaces.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\Events.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\Events.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\States.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\States.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\Utilities.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\Elements\Calendar\Utilities.js.map" />
     </ItemGroup>
 
     <ItemGroup>
@@ -62,6 +68,7 @@
 
     <ItemGroup>
       <TypeScriptCompile Remove="Scripts\Elements\Interfaces.ts" />
+      <TypeScriptCompile Remove="Scripts\Elements\Calendar.ts" />
     </ItemGroup>
 
 </Project>
