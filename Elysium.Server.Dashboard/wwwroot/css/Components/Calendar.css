@@ -9,6 +9,11 @@ calendar.date-picker {
     grid-gap: 7px;
 }
 
+calendar.date-picker day {
+    outline: 1px solid transparent;
+    transition: outline-color var(--transition-delay) var(--transition-effect);
+}
+
 calendar.date-picker day,
 calendar.date-picker day > button {
     border-radius: 5px;
@@ -31,7 +36,11 @@ calendar.date-picker day > button.clickable {
 }
 
 calendar.date-picker day.today {
-    outline: 1px solid #7D7D7D;
+    outline-color: #7D7D7D;
+}
+
+calendar.date-picker day:hover {
+    outline-color: white;
 }
 
 calendar.date-picker day.selected > button {

@@ -6,6 +6,8 @@
     --foreground-color: #292929;
     --action-color: #246BFC;
     --action-color-highlight: #2A83FF;
+    --transition-delay: 0.2s;
+    --transition-effect: cubic-bezier(0.2, 0, 0, 1);
 }
 
 body {
