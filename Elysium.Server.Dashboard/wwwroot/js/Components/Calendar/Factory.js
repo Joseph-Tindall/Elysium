@@ -33,8 +33,9 @@ export class Calendar {
             const dayDate = new Date(date.getFullYear(), date.getMonth(), day).toLocaleDateString();
             const dayElement = document.createElement('day');
             const dayElementButton = document.createElement('button');
-            if (this.interactions === EInteractions.Enabled) {
-                dayElementButton.className = 'clickable';
+            if (this.interactions != EInteractions.None) {
+                const interactionClasses = ['enabled', 'disabled'];
+                dayElementButton.className = interactionClasses[this.interactions - 1];
                 dayElementButton.addEventListener('click', (event) => this.onDayClick(event));
             }
             dayElementButton.innerHTML = '<span aria-hidden="true">' + day.toString() + '</span>';
@@ -77,6 +78,8 @@ export class Calendar {
         this.cycle = 0;
     }
     onDayClick(event) {
+        if (this.interactions != EInteractions.Enabled)
+            return;
         const dayButton = event.currentTarget;
         const dayElement = dayButton.closest('day');
         const dayDate = Number(dayButton.querySelector('span').innerHTML);

@@ -31,15 +31,19 @@ calendar.date-picker day > button {
     line-height: calc(var(--squared) - 2px);
 }
 
-calendar.date-picker day > button.clickable {
+calendar.date-picker day > button.enabled {
     cursor: pointer;
+}
+
+calendar.date-picker day > button.disabled {
+    cursor: not-allowed;
 }
 
 calendar.date-picker day.today {
     outline-color: #7D7D7D;
 }
 
-calendar.date-picker day:hover {
+calendar.date-picker day:has(button.enabled):hover {
     outline-color: white;
 }
 

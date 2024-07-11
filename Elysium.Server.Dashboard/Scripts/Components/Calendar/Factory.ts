@@ -9,8 +9,8 @@ export class Calendar
     
     private readonly allowRange: boolean;
     private readonly expandableRange: boolean;
-    private readonly interactions: EInteractions;
     
+    public interactions: EInteractions;
     private allDaysCache: HTMLElement[] = [];
     private cycle: number = 0;
     
@@ -49,8 +49,9 @@ export class Calendar
             
             const dayElementButton: HTMLButtonElement = document.createElement('button');
             
-            if (this.interactions === EInteractions.Enabled) {
-                dayElementButton.className = 'clickable';
+            if (this.interactions != EInteractions.None) {
+                const interactionClasses: string[] = ['enabled', 'disabled'];
+                dayElementButton.className = interactionClasses[this.interactions - 1];
                 dayElementButton.addEventListener('click', (event: MouseEvent) => this.onDayClick(event));
             }
             
@@ -100,6 +101,8 @@ export class Calendar
     }
     
     private onDayClick(event: MouseEvent): void {
+        if (this.interactions != EInteractions.Enabled) return;
+        
         const dayButton: HTMLButtonElement = event.currentTarget as HTMLButtonElement;
         const dayElement: HTMLElement = dayButton.closest('day');
         
