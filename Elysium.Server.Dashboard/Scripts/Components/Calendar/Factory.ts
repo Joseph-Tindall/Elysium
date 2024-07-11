@@ -5,18 +5,21 @@ import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
 export class Calendar
 {
     public element: HTMLElement;
+    public selectedDays: Day[] = [];
+    
     private readonly allowRange: boolean;
+    private readonly alternateSelections: boolean;
     private readonly interactions: EInteractions;
     
     private allDaysCache: HTMLElement[] = [];
-    private selectedDays: Day[] = [];
     private cycle: number = 0;
     
-    constructor(initialDate: Date, interactions: EInteractions = EInteractions.None, allowRange: boolean = false, type?: string) {
+    constructor(initialDate: Date, interactions: EInteractions = EInteractions.None, allowRange: boolean = false, alternateSelections: boolean = true, type?: string) {
         this.element = this.createHtmlElement(type);
         
         this.allowRange = allowRange;
         this.interactions = interactions;
+        this.alternateSelections = alternateSelections;
         this.element.dataset.month = initialDate.getMonth().toString();
         this.element.dataset.year = initialDate.getFullYear().toString();
         this.update();
@@ -71,36 +74,54 @@ export class Calendar
         this.allDaysCache = [] as HTMLElement[];
     }
     
+    private updateCycle(): void {
+        this.cycle = this.allowRange && this.cycle === 0 ? 1 : 0;
+    }
+    
     private onDayClick(event: MouseEvent): void {
         const dayButton: HTMLButtonElement = event.currentTarget as HTMLButtonElement;
         const dayElement: HTMLElement = dayButton.closest('day');
         const dayDate: number = Number(dayButton.querySelector<HTMLElement>('span').innerHTML);
 
-        if (this.allowRange) this.cycle = this.cycle === 0 ? 1 : 0; else this.cycle = 0;
+        this.updateCycle();
         
         if ((this.selectedDays[0] && this.selectedDays[1]) || (!this.allowRange && this.selectedDays[0])) {
-            this.selectedDays[this.cycle].element.classList.remove('selected');
+            if (this.selectedDays[1] && this.selectedDays[0].date.getTime() === this.selectedDays[1].date.getTime()) {
+                this.selectedDays[0] = this.selectedDays[this.cycle];
+                this.cycle = 1;
+            } else {
+                this.selectedDays[this.cycle].element.classList.remove('selected');
+            }
+        }
+
+        if (!this.alternateSelections && this.selectedDays[0] && this.selectedDays[1]) {
+            for (let day: number = 0; day < 2; day++) {
+                this.selectedDays[day].element.classList.remove('selected');
+                delete this.selectedDays[day];
+            }
+            
+            this.cycle = 0;
         }
 
         const date: Date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
         this.selectedDays[this.cycle] = new Day(dayElement, date);
         
-        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date < this.selectedDays[1].date) {
+        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date > this.selectedDays[1].date) {
             [this.selectedDays[0], this.selectedDays[1]] = [this.selectedDays[1], this.selectedDays[0]];
+            this.updateCycle();
         }
         
         dayElement.classList.add('selected');
-        
-        if (this.selectedDays[0] && this.selectedDays[1]) this.highlightDayRange();
+        this.highlightDayRange();
     }
     
     private highlightDayRange(): void {
         this.allDaysCache.forEach((day: HTMLElement): void => {
             const dayButton: HTMLButtonElement = day.querySelector<HTMLButtonElement>('button');
-            const dayDate: number = Number(dayButton.querySelector<HTMLElement>('span').innerHTML);
+            const dayDate: number = Number(dayButton?.querySelector<HTMLElement>('span')?.innerHTML);
             const date: Date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
             
-            if (date > this.selectedDays[0].date && date < this.selectedDays[1].date) {
+            if (this.selectedDays[0] && this.selectedDays[1] && date > this.selectedDays[0].date && date < this.selectedDays[1].date) {
                  day.classList.add('in-selection');
             } else {
                 day.classList.remove('in-selection');
