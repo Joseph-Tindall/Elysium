@@ -81,9 +81,7 @@ export class Calendar
     
     private updateCycle(override?: number): void {
         if (override != null) {
-            if (this.selectedDays[override])
-                this.selectedDays[override].element.classList.remove('selected');
-            
+            if (this.selectedDays[override]) this.selectedDays[override].element.classList.remove('selected');
             this.cycle = override;
         } else {
             this.cycle = this.allowRange && this.cycle === 0 ? 1 : 0;
@@ -91,7 +89,9 @@ export class Calendar
     }
     
     private resetCycle(): void {
-        for (let day: number = 0; day < 2; day++) {
+        for (let day: number = 0; day < this.selectedDays.length; day++) {
+            if (!this.selectedDays[day]) continue;
+            
             this.selectedDays[day].element.classList.remove('selected');
             delete this.selectedDays[day];
         }

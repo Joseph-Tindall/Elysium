@@ -68,7 +68,9 @@ export class Calendar {
         }
     }
     resetCycle() {
-        for (let day = 0; day < 2; day++) {
+        for (let day = 0; day < this.selectedDays.length; day++) {
+            if (!this.selectedDays[day])
+                continue;
             this.selectedDays[day].element.classList.remove('selected');
             delete this.selectedDays[day];
         }
