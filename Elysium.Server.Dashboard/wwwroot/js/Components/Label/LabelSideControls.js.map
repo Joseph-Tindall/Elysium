@@ -1,0 +1,1 @@
+{"version":3,"file":"LabelSideControls.js","sourceRoot":"","sources":["../../../../Scripts/Components/Label/LabelSideControls.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,cAAc,CAAC;AAErC,MAAM,OAAO,iBAAkB,SAAQ,KAAK;IAExC,YAAY,MAAmB;QAC3B,KAAK,CAAC,MAAM,CAAC,CAAC;QAEd,OAAO,IAAI,CAAC;IAChB,CAAC;CACJ"}
