@@ -81,28 +81,26 @@ export class Calendar {
         const dayElement = dayButton.closest('day');
         const dayDate = Number(dayButton.querySelector('span').innerHTML);
         const date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
-        const bothDaysExist = !!(this.selectedDays[0] && this.selectedDays[1]);
-        const bothDaysSameDate = bothDaysExist && ((this.selectedDays[0].date.getTime() === date.getTime()) ||
+        const bothDaysSameDate = !!(this.selectedDays[0] && this.selectedDays[1]) && ((this.selectedDays[0].date.getTime() === date.getTime()) ||
             (this.selectedDays[1].date.getTime() === date.getTime()));
         this.updateCycle();
         if (!this.allowRange && this.selectedDays[0]) {
             this.selectedDays[this.cycle].element.classList.remove('selected');
         }
-        if (this.allowRange && (bothDaysSameDate || !this.expandableRange)) {
+        if ((!!(this.selectedDays[0] && this.selectedDays[1]) && (bothDaysSameDate || !this.expandableRange)) || !this.allowRange && this.selectedDays[0]) {
             this.resetCycle();
         }
-        if (this.allowRange && !bothDaysSameDate && bothDaysExist) {
+        if (this.allowRange && !bothDaysSameDate && !!(this.selectedDays[0] && this.selectedDays[1]) && this.expandableRange) {
             const selectedTime = date.getTime();
             const leftTime = this.selectedDays[0].date.getTime();
             const rightTime = this.selectedDays[1].date.getTime();
-            if (selectedTime < leftTime) {
+            if (selectedTime < leftTime)
                 this.updateCycle(0);
-            }
-            else if (selectedTime > rightTime) {
+            else if (selectedTime > rightTime)
                 this.updateCycle(1);
-            }
             else {
-                this.updateCycle(Math.abs(selectedTime - leftTime) <= Math.abs(selectedTime - rightTime) ? 0 : 1);
+                const side = Math.abs(selectedTime - leftTime) <= Math.abs(selectedTime - rightTime) ? 0 : 1;
+                this.updateCycle(side);
             }
         }
         this.selectedDays[this.cycle] = new Day(dayElement, date);

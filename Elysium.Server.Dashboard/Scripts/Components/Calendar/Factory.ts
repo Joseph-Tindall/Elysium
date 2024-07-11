@@ -106,8 +106,7 @@ export class Calendar
         const dayDate: number = Number(dayButton.querySelector<HTMLElement>('span').innerHTML);
         const date: Date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
         
-        const bothDaysExist: boolean = !!(this.selectedDays[0] && this.selectedDays[1]);
-        const bothDaysSameDate: boolean = bothDaysExist && (
+        const bothDaysSameDate: boolean = !!(this.selectedDays[0] && this.selectedDays[1]) && (
             (this.selectedDays[0].date.getTime() === date.getTime()) ||
             (this.selectedDays[1].date.getTime() === date.getTime())
         );
@@ -118,23 +117,20 @@ export class Calendar
             this.selectedDays[this.cycle].element.classList.remove('selected');
         }
 
-        if (this.allowRange && (bothDaysSameDate || !this.expandableRange)) {
+        if ((!!(this.selectedDays[0] && this.selectedDays[1]) && (bothDaysSameDate || !this.expandableRange)) || !this.allowRange && this.selectedDays[0]) {
             this.resetCycle();
         }
 
-        if (this.allowRange && !bothDaysSameDate && bothDaysExist) {
+        if (this.allowRange && !bothDaysSameDate && !!(this.selectedDays[0] && this.selectedDays[1]) && this.expandableRange) {
             const selectedTime: number = date.getTime();
             const leftTime: number = this.selectedDays[0].date.getTime();
             const rightTime: number = this.selectedDays[1].date.getTime();
 
-            if (selectedTime < leftTime) {
-                this.updateCycle(0);
-            } else if (selectedTime > rightTime) {
-                this.updateCycle(1);
-            } else {
-                this.updateCycle(
-                    Math.abs(selectedTime - leftTime) <= Math.abs(selectedTime - rightTime) ? 0 : 1
-                );
+            if (selectedTime < leftTime) this.updateCycle(0);
+            else if (selectedTime > rightTime) this.updateCycle(1);
+            else {
+                const side = Math.abs(selectedTime - leftTime) <= Math.abs(selectedTime - rightTime) ? 0 : 1;
+                this.updateCycle(side);
             }
         }
         

@@ -8,7 +8,7 @@ function createDatePicker(initialDate: Date = new Date()): void {
         initialDate,
         EInteractions.Enabled, 
         true, 
-        false, 
+        true, 
         'date-picker'
     );
 
