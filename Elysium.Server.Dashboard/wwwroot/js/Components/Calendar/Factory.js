@@ -2,14 +2,14 @@ import { EInteractions } from "../../Enumerations/EInteractions.js";
 import { Day } from "./Day.js";
 import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
 export class Calendar {
-    constructor(initialDate, interactions = EInteractions.None, allowRange = false, alternateSelections = true, type) {
+    constructor(initialDate, interactions = EInteractions.None, allowRange = false, expandableRange = true, type) {
         this.selectedDays = [];
         this.allDaysCache = [];
         this.cycle = 0;
         this.element = this.createHtmlElement(type);
         this.allowRange = allowRange;
         this.interactions = interactions;
-        this.alternateSelections = alternateSelections;
+        this.expandableRange = expandableRange;
         this.element.dataset.month = initialDate.getMonth().toString();
         this.element.dataset.year = initialDate.getFullYear().toString();
         this.update();
@@ -53,38 +53,60 @@ export class Calendar {
         dayElements.forEach((dayElement) => dayElement.remove());
         this.allDaysCache = [];
     }
-    updateCycle() {
-        this.cycle = this.allowRange && this.cycle === 0 ? 1 : 0;
+    sortDaysByDate() {
+        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date > this.selectedDays[1].date)
+            [this.selectedDays[0], this.selectedDays[1]] = [this.selectedDays[1], this.selectedDays[0]];
+    }
+    updateCycle(override) {
+        if (override != null) {
+            if (this.selectedDays[override])
+                this.selectedDays[override].element.classList.remove('selected');
+            this.cycle = override;
+        }
+        else {
+            this.cycle = this.allowRange && this.cycle === 0 ? 1 : 0;
+        }
+    }
+    resetCycle() {
+        for (let day = 0; day < 2; day++) {
+            this.selectedDays[day].element.classList.remove('selected');
+            delete this.selectedDays[day];
+        }
+        this.cycle = 0;
     }
     onDayClick(event) {
         const dayButton = event.currentTarget;
         const dayElement = dayButton.closest('day');
         const dayDate = Number(dayButton.querySelector('span').innerHTML);
+        const date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
+        const bothDaysExist = !!(this.selectedDays[0] && this.selectedDays[1]);
+        const bothDaysSameDate = bothDaysExist && ((this.selectedDays[0].date.getTime() === date.getTime()) ||
+            (this.selectedDays[1].date.getTime() === date.getTime()));
         this.updateCycle();
-        if ((this.selectedDays[0] && this.selectedDays[1]) || (!this.allowRange && this.selectedDays[0])) {
-            if (this.selectedDays[1] && this.selectedDays[0].date.getTime() === this.selectedDays[1].date.getTime()) {
-                this.selectedDays[0] = this.selectedDays[this.cycle];
-                this.cycle = 1;
+        if (!this.allowRange && this.selectedDays[0]) {
+            this.selectedDays[this.cycle].element.classList.remove('selected');
+        }
+        if (this.allowRange && (bothDaysSameDate || !this.expandableRange)) {
+            this.resetCycle();
+        }
+        if (this.allowRange && !bothDaysSameDate && bothDaysExist) {
+            const selectedTime = date.getTime();
+            const leftTime = this.selectedDays[0].date.getTime();
+            const rightTime = this.selectedDays[1].date.getTime();
+            if (selectedTime < leftTime) {
+                this.updateCycle(0);
+            }
+            else if (selectedTime > rightTime) {
+                this.updateCycle(1);
             }
             else {
-                this.selectedDays[this.cycle].element.classList.remove('selected');
+                this.updateCycle(Math.abs(selectedTime - leftTime) <= Math.abs(selectedTime - rightTime) ? 0 : 1);
             }
         }
-        if (!this.alternateSelections && this.selectedDays[0] && this.selectedDays[1]) {
-            for (let day = 0; day < 2; day++) {
-                this.selectedDays[day].element.classList.remove('selected');
-                delete this.selectedDays[day];
-            }
-            this.cycle = 0;
-        }
-        const date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
         this.selectedDays[this.cycle] = new Day(dayElement, date);
-        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date > this.selectedDays[1].date) {
-            [this.selectedDays[0], this.selectedDays[1]] = [this.selectedDays[1], this.selectedDays[0]];
-            this.updateCycle();
-        }
-        dayElement.classList.add('selected');
+        this.sortDaysByDate();
         this.highlightDayRange();
+        dayElement.classList.add('selected');
     }
     highlightDayRange() {
         this.allDaysCache.forEach((day) => {
