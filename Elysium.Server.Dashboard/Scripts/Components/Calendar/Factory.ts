@@ -69,17 +69,24 @@ export class Calendar
             
             if (dayDate === today) dayElement.classList.add('today');
             
-            
+            this.selectedDays.forEach((selectedDay: Day): void => {
+                const selectedDate: string = selectedDay.date.toLocaleDateString();
+                
+                if (dayDate === selectedDate) {
+                    dayElement.classList.add('selected');
+                }
+            });
             
             this.element.appendChild(dayElement);
             this.allDaysCache.push(dayElement);
         }
 
         const firstDayOfMonth: HTMLElement = this.element.querySelector<HTMLElement>('day');
+        this.highlightDayRange();
         
         if (firstDayOfMonth) firstDayOfMonth.style.gridColumnStart = getFirstDayOfWeek(date).toString();
     }
-
+    
     private removeDays(): void {
         const dayElements: NodeListOf<HTMLElement> = this.element.querySelectorAll('day');
         dayElements.forEach((dayElement: HTMLElement) => dayElement.remove());
@@ -156,10 +163,18 @@ export class Calendar
     }
     
     private highlightDayRange(): void {
+        if (!this.selectedDays) return;
+        
         this.allDaysCache.forEach((day: HTMLElement): void => {
             const dayButton: HTMLButtonElement = day.querySelector<HTMLButtonElement>('button');
             const dayDate: number = Number(dayButton?.querySelector<HTMLElement>('span')?.innerHTML);
             const date: Date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
+            
+            const dateLocalized: string = date.toLocaleDateString();
+
+            if (!(this.selectedDays.some((selectedDay: Day): boolean => selectedDay.date.toLocaleDateString() === dateLocalized))) {
+                day.classList.remove('selected');
+            }
             
             if (this.selectedDays[0] && this.selectedDays[1] && date > this.selectedDays[0].date && date < this.selectedDays[1].date) {
                  day.classList.add('in-selection');

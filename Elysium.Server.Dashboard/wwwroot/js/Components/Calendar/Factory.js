@@ -68,10 +68,17 @@ export class Calendar {
             dayElement.appendChild(dayElementButton);
             if (dayDate === today)
                 dayElement.classList.add('today');
+            this.selectedDays.forEach((selectedDay) => {
+                const selectedDate = selectedDay.date.toLocaleDateString();
+                if (dayDate === selectedDate) {
+                    dayElement.classList.add('selected');
+                }
+            });
             this.element.appendChild(dayElement);
             this.allDaysCache.push(dayElement);
         }
         const firstDayOfMonth = this.element.querySelector('day');
+        this.highlightDayRange();
         if (firstDayOfMonth)
             firstDayOfMonth.style.gridColumnStart = getFirstDayOfWeek(date).toString();
     }
@@ -139,11 +146,17 @@ export class Calendar {
         dayElement.classList.add('selected');
     }
     highlightDayRange() {
+        if (!this.selectedDays)
+            return;
         this.allDaysCache.forEach((day) => {
             var _a;
             const dayButton = day.querySelector('button');
             const dayDate = Number((_a = dayButton === null || dayButton === void 0 ? void 0 : dayButton.querySelector('span')) === null || _a === void 0 ? void 0 : _a.innerHTML);
             const date = new Date(Number(this.element.dataset.year), Number(this.element.dataset.month), dayDate);
+            const dateLocalized = date.toLocaleDateString();
+            if (!(this.selectedDays.some((selectedDay) => selectedDay.date.toLocaleDateString() === dateLocalized))) {
+                day.classList.remove('selected');
+            }
             if (this.selectedDays[0] && this.selectedDays[1] && date > this.selectedDays[0].date && date < this.selectedDays[1].date) {
                 day.classList.add('in-selection');
             }
