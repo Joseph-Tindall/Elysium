@@ -1,7 +1,8 @@
 import { EInteractions } from "../../Enumerations/EInteractions.js";
+import { EDays } from "../../Enumerations/EDates.js";
 import { Day } from "./Day.js";
 import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
-import { shortDays, Days } from "./Constants.js";
+import { shortDays } from "./Constants.js";
 export class Calendar {
     constructor(initialDate, interactions = EInteractions.None, allowRange = false, expandableRange = false, tagName) {
         this.selectedDays = [];
@@ -38,7 +39,7 @@ export class Calendar {
         const element = document.createElement('calendar');
         if (type)
             element.classList.add(type);
-        for (let dayOfWeek = Days.Sunday; dayOfWeek <= Days.Saturday; dayOfWeek++) {
+        for (let dayOfWeek = EDays.Sunday; dayOfWeek <= EDays.Saturday; dayOfWeek++) {
             const day = document.createElement('div');
             day.className = 'day-of-week';
             day.innerHTML = shortDays[dayOfWeek];
