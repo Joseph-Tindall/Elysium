@@ -33,6 +33,7 @@
       <Folder Include="Controllers\Conditions\" />
       <Folder Include="Migrations\" />
       <Folder Include="wwwroot\js\Elements\" />
+      <Folder Include="wwwroot\svg\" />
     </ItemGroup>
 
     <ItemGroup>

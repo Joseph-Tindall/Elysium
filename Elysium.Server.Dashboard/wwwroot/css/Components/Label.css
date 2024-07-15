@@ -9,20 +9,44 @@ button.control:has(~ label),
 label ~ button.control {
     --squared: 30px;
     
-    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
     color: #AAA;
+    overflow: hidden;
     font-weight: bold;
     border-radius: 8px;
     width: var(--squared);
     height: var(--squared);
     background-color: transparent;
+    border: 1px solid transparent;
     transition: border-color var(--transition-delay) var(--transition-effect);
+}
+
+button.control:has(~ label) svg,
+label ~ button.control svg {
+    fill: #AAA;
+    width: 70%;
+    margin: auto;
+    display: block;
+    transition: fill var(--transition-delay) var(--transition-effect);
+}
+
+button.control:has(~ label) svg path,
+label ~ button.control svg path {
+    
 }
 
 button.control:not(.disabled):has(~ label):hover,
 label ~ button.control:not(.disabled):hover {
     cursor: pointer;
     border-color: #FFF;
+}
+
+button.control:not(.disabled):has(~ label):hover svg,
+label ~ button.control:not(.disabled):hover  svg{
+    fill: #FFF;
 }
 
 button.control.disabled:has(~ label),
