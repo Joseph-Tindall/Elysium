@@ -10,7 +10,6 @@
     private createHtmlElement(parent: HTMLElement): HTMLElement {
         const element: HTMLElement = document.createElement('module');
         element.classList.add('container');
-        element.innerHTML = `<div class="content"><slot></slot></div>`;
         parent.appendChild(element);
         return element;
     }

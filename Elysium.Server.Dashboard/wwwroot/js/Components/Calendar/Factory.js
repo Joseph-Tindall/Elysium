@@ -2,11 +2,11 @@ import { EInteractions } from "../../Enumerations/EInteractions.js";
 import { Day } from "./Day.js";
 import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
 export class Calendar {
-    constructor(initialDate, interactions = EInteractions.None, allowRange = false, expandableRange = false, type) {
+    constructor(initialDate, interactions = EInteractions.None, allowRange = false, expandableRange = false, tagName) {
         this.selectedDays = [];
         this.allDaysCache = [];
         this.cycle = 0;
-        this.element = this.createHtmlElement(type);
+        this.element = this.createHtmlElement(tagName);
         this.allowRange = allowRange;
         this.interactions = interactions;
         this.expandableRange = expandableRange;
@@ -131,6 +131,12 @@ export class Calendar {
                 day.classList.remove('in-selection');
             }
         });
+    }
+    scrollToPreviousMonth() {
+        console.log('Previous month called.');
+    }
+    scrollToNextMonth() {
+        console.log('Next month called.');
     }
 }
 //# sourceMappingURL=Factory.js.map

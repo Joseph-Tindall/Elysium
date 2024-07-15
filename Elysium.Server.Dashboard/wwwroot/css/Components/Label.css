@@ -1,0 +1,30 @@
+label {
+    text-align: center;
+    flex-grow: 1;
+    line-height: 30px;
+    color: #FFF;
+}
+
+button.control:has(~ label),
+label ~ button.control {
+    --squared: 30px;
+    
+    border: 1px solid transparent;
+    color: #AAA;
+    border-radius: 8px;
+    width: var(--squared);
+    height: var(--squared);
+    background-color: transparent;
+    transition: border-color var(--transition-delay) var(--transition-effect);
+}
+
+button.control:not(.disabled):has(~ label):hover,
+label ~ button.control:not(.disabled):hover {
+    cursor: pointer;
+    border-color: #FFF;
+}
+
+button.control.disabled:has(~ label),
+label ~ button.control.disabled {
+    opacity: 0;
+}

@@ -14,8 +14,8 @@ export class Calendar
     private allDaysCache: HTMLElement[] = [];
     private cycle: number = 0;
     
-    constructor(initialDate: Date, interactions: EInteractions = EInteractions.None, allowRange: boolean = false, expandableRange: boolean = false, type?: string) {
-        this.element = this.createHtmlElement(type);
+    constructor(initialDate: Date, interactions: EInteractions = EInteractions.None, allowRange: boolean = false, expandableRange: boolean = false, tagName?: string) {
+        this.element = this.createHtmlElement(tagName);
         
         this.allowRange = allowRange;
         this.interactions = interactions;
@@ -163,5 +163,13 @@ export class Calendar
                 day.classList.remove('in-selection');
             }
         });
+    }
+    
+    public scrollToPreviousMonth(): void {
+        console.log('Previous month called.');
+    }
+    
+    public scrollToNextMonth(): void {
+        console.log('Next month called.');
     }
 }
