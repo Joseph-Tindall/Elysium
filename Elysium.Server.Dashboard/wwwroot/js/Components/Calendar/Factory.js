@@ -1,11 +1,30 @@
 import { EInteractions } from "../../Enumerations/EInteractions.js";
 import { Day } from "./Day.js";
 import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
+import { shortDays, Days } from "./Constants.js";
 export class Calendar {
     constructor(initialDate, interactions = EInteractions.None, allowRange = false, expandableRange = false, tagName) {
         this.selectedDays = [];
         this.allDaysCache = [];
         this.cycle = 0;
+        this.scrollToPreviousMonth = () => {
+            const month = Number(this.element.dataset.month);
+            const year = Number(this.element.dataset.year);
+            let newMonth = month === 0 ? 11 : month - 1;
+            let newYear = month === 0 ? year - 1 : year;
+            this.element.dataset.year = newYear.toString();
+            this.element.dataset.month = newMonth.toString();
+            this.update();
+        };
+        this.scrollToNextMonth = () => {
+            const month = Number(this.element.dataset.month);
+            const year = Number(this.element.dataset.year);
+            let newMonth = month === 11 ? 0 : month + 1;
+            let newYear = month === 11 ? year + 1 : year;
+            this.element.dataset.year = newYear.toString();
+            this.element.dataset.month = newMonth.toString();
+            this.update();
+        };
         this.element = this.createHtmlElement(tagName);
         this.allowRange = allowRange;
         this.interactions = interactions;
@@ -19,11 +38,10 @@ export class Calendar {
         const element = document.createElement('calendar');
         if (type)
             element.classList.add(type);
-        const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-        for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+        for (let dayOfWeek = Days.Sunday; dayOfWeek <= Days.Saturday; dayOfWeek++) {
             const day = document.createElement('div');
             day.className = 'day-of-week';
-            day.innerHTML = daysOfWeek[dayOfWeek];
+            day.innerHTML = shortDays[dayOfWeek];
             element.appendChild(day);
         }
         return element;
@@ -131,12 +149,6 @@ export class Calendar {
                 day.classList.remove('in-selection');
             }
         });
-    }
-    scrollToPreviousMonth() {
-        console.log('Previous month called.');
-    }
-    scrollToNextMonth() {
-        console.log('Next month called.');
     }
 }
 //# sourceMappingURL=Factory.js.map

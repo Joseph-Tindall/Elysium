@@ -1,6 +1,7 @@
 ﻿import { EInteractions } from "../../Enumerations/EInteractions.js";
 import { Day } from "./Day.js";
 import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
+import { shortDays, Days } from "./Constants.js";
 
 export class Calendar
 {
@@ -31,11 +32,10 @@ export class Calendar
         const element: HTMLElement = document.createElement('calendar');
         if (type) element.classList.add(type);
         
-        const daysOfWeek: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-        for (let dayOfWeek: number = 0; dayOfWeek < 7; dayOfWeek++) {
+        for (let dayOfWeek: Days = Days.Sunday; dayOfWeek <= Days.Saturday; dayOfWeek++) {
             const day: HTMLElement = document.createElement('div');
             day.className = 'day-of-week';
-            day.innerHTML = daysOfWeek[dayOfWeek];
+            day.innerHTML = shortDays[dayOfWeek];
             element.appendChild(day);
         }
         
@@ -140,7 +140,7 @@ export class Calendar
             if (selectedTime < leftTime) this.updateCycle(0);
             else if (selectedTime > rightTime) this.updateCycle(1);
             else {
-                const side = Math.abs(selectedTime - leftTime) <= Math.abs(selectedTime - rightTime) ? 0 : 1;
+                const side: 0 | 1 = Math.abs(selectedTime - leftTime) <= Math.abs(selectedTime - rightTime) ? 0 : 1;
                 this.updateCycle(side);
             }
         }
@@ -164,12 +164,30 @@ export class Calendar
             }
         });
     }
-    
-    public scrollToPreviousMonth(): void {
-        console.log('Previous month called.');
+
+    public scrollToPreviousMonth = (): void => {
+        const month: number = Number(this.element.dataset.month);
+        const year: number = Number(this.element.dataset.year);
+        
+        let newMonth: number = month === 0 ? 11 : month - 1;
+        let newYear: number = month === 0 ? year - 1 : year;
+
+        this.element.dataset.year = newYear.toString();
+        this.element.dataset.month = newMonth.toString();
+        
+        this.update();
     }
     
-    public scrollToNextMonth(): void {
-        console.log('Next month called.');
+    public scrollToNextMonth = (): void => {
+        const month: number = Number(this.element.dataset.month);
+        const year: number = Number(this.element.dataset.year);
+
+        let newMonth: number = month ===11 ? 0 : month + 1;
+        let newYear: number = month === 11 ? year + 1 : year;
+
+        this.element.dataset.year = newYear.toString();
+        this.element.dataset.month = newMonth.toString();
+
+        this.update();
     }
 }
