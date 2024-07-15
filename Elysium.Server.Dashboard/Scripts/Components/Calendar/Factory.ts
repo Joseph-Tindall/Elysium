@@ -22,6 +22,7 @@ export class Calendar
         this.allowRange = allowRange;
         this.interactions = interactions;
         this.expandableRange = expandableRange;
+        
         this.element.dataset.month = initialDate.getMonth().toString();
         this.element.dataset.year = initialDate.getFullYear().toString();
         this.update();
@@ -108,7 +109,7 @@ export class Calendar
         }
     }
     
-    private resetCycle(): void {
+    public resetCycle(): void {
         for (let day: number = 0; day < this.selectedDays.length; day++) {
             if (!this.selectedDays[day]) continue;
             
@@ -162,7 +163,7 @@ export class Calendar
         dayElement.classList.add('selected');
     }
     
-    private highlightDayRange(): void {
+    public highlightDayRange(): void {
         if (!this.selectedDays) return;
         
         this.allDaysCache.forEach((day: HTMLElement): void => {

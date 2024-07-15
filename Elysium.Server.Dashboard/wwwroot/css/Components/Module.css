@@ -15,3 +15,7 @@ module:has(> calendar) {
 module:has(> label) {
     flex-direction: row;
 }
+
+module div > div.spacer {
+    
+}

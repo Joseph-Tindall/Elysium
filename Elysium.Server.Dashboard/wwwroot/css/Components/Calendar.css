@@ -2,6 +2,7 @@
     color: #FFF;
     font-size: 15px;
     display: grid;
+    margin-bottom: 14px;
     grid-template-columns: repeat(7, 1fr);
 }
 
@@ -19,15 +20,19 @@ calendar.date-picker day > button {
     border-radius: 5px;
 }
 
+calendar.date-picker day,
 calendar.date-picker day > button,
 calendar .day-of-week {
     --squared: 30px;
-    
+    width: var(--squared);
+    height: var(--squared);
+}
+
+calendar.date-picker day > button,
+calendar .day-of-week {
     color: #FFF;
     text-align: center;
     overflow: hidden;
-    width: var(--squared);
-    height: var(--squared);
     border: 1px solid transparent;
     background-color: transparent;
     line-height: calc(var(--squared) - 2px);

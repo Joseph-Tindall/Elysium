@@ -1,0 +1,34 @@
+﻿button.common {
+    color: #FFF;
+    cursor: pointer;
+    line-height: 30px;
+    border-radius: 8px;
+    width: fit-content;
+    padding: 0 18px;
+    border: 1px solid var(--border-color);
+    background-color: var(--foreground-color);
+    box-shadow: var(--box-shadow), inset var(--box-shadow);
+    transition: border-color var(--transition-delay) var(--transition-effect),
+                background-color var(--transition-delay) var(--transition-effect);
+}
+
+button.common.action {
+    background-color: #246BFC;
+}
+
+button.common.action:hover {
+    background-color: #2A83FF;
+}
+
+button.common:not(.action):hover,
+button.common:not(.action):active {
+    background-color: #272727;
+}
+
+button.common:not(.action):hover {
+    border-color: #FFF;
+}
+
+button.common:not(.action):active {
+    border-color: #2996FF;
+}

@@ -1,5 +1,6 @@
-﻿export class Control {
-    element: HTMLButtonElement;
+﻿export class Control
+{
+    public element: HTMLButtonElement;
     private _enabled: boolean;
     private _method: () => void;
 

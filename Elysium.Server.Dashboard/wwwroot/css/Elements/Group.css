@@ -1,0 +1,20 @@
+﻿div.group {
+    display: flex;
+    flex-direction: row;
+}
+
+div.group > div.spacer {
+    flex-grow: 1;
+}
+
+div.group > *:first-child {
+    margin-left: 0;
+}
+
+div.group > *:last-child {
+    margin-right: 0;
+}
+
+div.group > *:not(.spacer) {
+    margin: 0 4px;
+}

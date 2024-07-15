@@ -1,4 +1,5 @@
-﻿export enum EInteractions {
+﻿export enum EInteractions
+{
     None,
     Enabled,
     Disabled

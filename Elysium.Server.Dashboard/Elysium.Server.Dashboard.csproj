@@ -70,6 +70,7 @@
     <ItemGroup>
       <TypeScriptCompile Remove="Scripts\Elements\Day.ts" />
       <TypeScriptCompile Remove="Scripts\Elements\Calendar.ts" />
+      <TypeScriptCompile Remove="Scripts\Components\Button\Group.ts" />
     </ItemGroup>
 
     <ItemGroup>
