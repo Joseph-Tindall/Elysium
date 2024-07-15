@@ -2,7 +2,7 @@ import { EInteractions } from "../../Enumerations/EInteractions.js";
 import { Day } from "./Day.js";
 import { getLastDayOfMonth, getFirstDayOfWeek } from "./Utilities.js";
 export class Calendar {
-    constructor(initialDate, interactions = EInteractions.None, allowRange = false, expandableRange = true, type) {
+    constructor(initialDate, interactions = EInteractions.None, allowRange = false, expandableRange = false, type) {
         this.selectedDays = [];
         this.allDaysCache = [];
         this.cycle = 0;
@@ -19,6 +19,13 @@ export class Calendar {
         const element = document.createElement('calendar');
         if (type)
             element.classList.add(type);
+        const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+        for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+            const day = document.createElement('div');
+            day.className = 'day-of-week';
+            day.innerHTML = daysOfWeek[dayOfWeek];
+            element.appendChild(day);
+        }
         return element;
     }
     update() {

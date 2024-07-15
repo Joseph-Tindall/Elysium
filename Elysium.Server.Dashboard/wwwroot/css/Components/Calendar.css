@@ -19,16 +19,22 @@ calendar.date-picker day > button {
     border-radius: 5px;
 }
 
-calendar.date-picker day > button {
+calendar.date-picker day > button,
+calendar .day-of-week {
     --squared: 30px;
     
+    color: #FFF;
     text-align: center;
-    color: var(--color);
+    overflow: hidden;
     width: var(--squared);
     height: var(--squared);
     border: 1px solid transparent;
     background-color: transparent;
     line-height: calc(var(--squared) - 2px);
+}
+
+calendar .day-of-week {
+    color: #AAA;
 }
 
 calendar.date-picker day > button.enabled {

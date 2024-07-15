@@ -14,7 +14,7 @@ export class Calendar
     private allDaysCache: HTMLElement[] = [];
     private cycle: number = 0;
     
-    constructor(initialDate: Date, interactions: EInteractions = EInteractions.None, allowRange: boolean = false, expandableRange: boolean = true, type?: string) {
+    constructor(initialDate: Date, interactions: EInteractions = EInteractions.None, allowRange: boolean = false, expandableRange: boolean = false, type?: string) {
         this.element = this.createHtmlElement(type);
         
         this.allowRange = allowRange;
@@ -30,6 +30,14 @@ export class Calendar
     private createHtmlElement(type?: string): HTMLElement {
         const element: HTMLElement = document.createElement('calendar');
         if (type) element.classList.add(type);
+        
+        const daysOfWeek: string[] = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+        for (let dayOfWeek: number = 0; dayOfWeek < 7; dayOfWeek++) {
+            const day: HTMLElement = document.createElement('div');
+            day.className = 'day-of-week';
+            day.innerHTML = daysOfWeek[dayOfWeek];
+            element.appendChild(day);
+        }
         
         return element;
     }
