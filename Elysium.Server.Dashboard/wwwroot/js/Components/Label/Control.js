@@ -14,10 +14,12 @@ export class Control {
     }
     updateState() {
         if (this.enabled) {
+            this.element.disabled = false;
             this.element.classList.remove('disabled');
             this.element.onclick = this.method;
         }
         else {
+            this.element.disabled = true;
             this.element.classList.add('disabled');
             this.element.onclick = void {};
         }

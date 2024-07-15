@@ -169,8 +169,8 @@ export class Calendar
         const month: number = Number(this.element.dataset.month);
         const year: number = Number(this.element.dataset.year);
         
-        let newMonth: number = month === 0 ? 11 : month - 1;
-        let newYear: number = month === 0 ? year - 1 : year;
+        const newMonth: number = month === 0 ? 11 : month - 1;
+        const newYear: number = month === 0 ? year - 1 : year;
 
         this.element.dataset.year = newYear.toString();
         this.element.dataset.month = newMonth.toString();
@@ -182,8 +182,8 @@ export class Calendar
         const month: number = Number(this.element.dataset.month);
         const year: number = Number(this.element.dataset.year);
 
-        let newMonth: number = month ===11 ? 0 : month + 1;
-        let newYear: number = month === 11 ? year + 1 : year;
+        const newMonth: number = month === 11 ? 0 : month + 1;
+        const newYear: number = month === 11 ? year + 1 : year;
 
         this.element.dataset.year = newYear.toString();
         this.element.dataset.month = newMonth.toString();

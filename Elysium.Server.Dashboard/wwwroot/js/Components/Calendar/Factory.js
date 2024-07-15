@@ -10,8 +10,8 @@ export class Calendar {
         this.scrollToPreviousMonth = () => {
             const month = Number(this.element.dataset.month);
             const year = Number(this.element.dataset.year);
-            let newMonth = month === 0 ? 11 : month - 1;
-            let newYear = month === 0 ? year - 1 : year;
+            const newMonth = month === 0 ? 11 : month - 1;
+            const newYear = month === 0 ? year - 1 : year;
             this.element.dataset.year = newYear.toString();
             this.element.dataset.month = newMonth.toString();
             this.update();
@@ -19,8 +19,8 @@ export class Calendar {
         this.scrollToNextMonth = () => {
             const month = Number(this.element.dataset.month);
             const year = Number(this.element.dataset.year);
-            let newMonth = month === 11 ? 0 : month + 1;
-            let newYear = month === 11 ? year + 1 : year;
+            const newMonth = month === 11 ? 0 : month + 1;
+            const newYear = month === 11 ? year + 1 : year;
             this.element.dataset.year = newYear.toString();
             this.element.dataset.month = newMonth.toString();
             this.update();
