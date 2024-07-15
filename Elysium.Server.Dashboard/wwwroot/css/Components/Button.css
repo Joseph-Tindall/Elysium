@@ -38,7 +38,8 @@ button.common:not(.action):hover {
     border-color: #FFF;
 }
 
-button.common:not(.action):active {
+button.common:not(.action):active,
+button.common:not(.action).expanded {
     border-color: #2996FF;
 }
 
@@ -60,4 +61,31 @@ button.common:hover svg {
 
 button.common:not(.action):active svg {
     fill: #2996FF;
+}
+
+dropdown {
+    display: block;
+    width: 250px;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 8px;
+    height: fit-content;
+    border: 1px solid var(--border-color);
+    background-color: var(--foreground-color);
+    box-shadow: var(--box-shadow), inset var(--box-shadow);
+}
+
+dropdown option {
+    width: 100%;
+    color: #FFF;
+    cursor: pointer;
+    padding: 0 14px;
+    line-height: 30px;
+    border-radius: 8px;
+    background-color: transparent;
+    transition: background-color var(--transition-delay) var(--transition-effect);
+}
+
+dropdown option:hover {
+    background-color: #424242;
 }
