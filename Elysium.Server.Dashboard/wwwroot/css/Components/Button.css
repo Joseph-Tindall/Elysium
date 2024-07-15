@@ -1,18 +1,25 @@
 ﻿button.common {
-    color: #FFF;
+    gap: 10px;
+    color: #AAA;
+    display: flex;
     cursor: pointer;
     line-height: 30px;
     border-radius: 8px;
     width: fit-content;
-    padding: 0 18px;
+    padding: 0 14px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     border: 1px solid var(--border-color);
     background-color: var(--foreground-color);
     box-shadow: var(--box-shadow), inset var(--box-shadow);
-    transition: border-color var(--transition-delay) var(--transition-effect),
+    transition: color var(--transition-delay) var(--transition-effect),
+                border-color var(--transition-delay) var(--transition-effect),
                 background-color var(--transition-delay) var(--transition-effect);
 }
 
 button.common.action {
+    color: #FFF;
     background-color: #246BFC;
 }
 
@@ -20,9 +27,11 @@ button.common.action:hover {
     background-color: #2A83FF;
 }
 
+button.common:not(.action):focus,
 button.common:not(.action):hover,
 button.common:not(.action):active {
     background-color: #272727;
+    color: #FFF;
 }
 
 button.common:not(.action):hover {
@@ -31,4 +40,24 @@ button.common:not(.action):hover {
 
 button.common:not(.action):active {
     border-color: #2996FF;
+}
+
+button.common:has(svg) {
+    padding-left: 7px;
+}
+
+button.common svg {
+    fill: #AAA;
+    height: 20px;
+    width: 20px;
+    transition: fill var(--transition-delay) var(--transition-effect);
+}
+
+button.common:focus svg,
+button.common:hover svg {
+    fill: #FFF;
+}
+
+button.common:not(.action):active svg {
+    fill: #2996FF;
 }

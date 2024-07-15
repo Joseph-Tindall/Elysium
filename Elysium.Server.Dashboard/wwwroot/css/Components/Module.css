@@ -17,5 +17,5 @@ module:has(> label) {
 }
 
 module div > div.spacer {
-    
+    flex-grow: 1;
 }
