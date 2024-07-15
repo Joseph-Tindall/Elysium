@@ -1,29 +1,29 @@
 ﻿export class Control {
     element: HTMLButtonElement;
-    enabled: boolean;
-    method: () => void;
+    private _enabled: boolean;
+    private _method: () => void;
 
     constructor(element: HTMLButtonElement, enabled: boolean = true) {
         this.element = element;
-        this.enabled = enabled;
+        this._enabled = enabled;
         return this;
     }
     
     setState(state: boolean): void {
-        this.enabled = state;
+        this._enabled = state;
         this.updateState();
     }
     
     setMethod(method: () => void): void {
-        this.method = method;
+        this._method = method;
         this.updateState();
     }
     
     updateState(): void {
-        if (this.enabled) {
+        if (this._enabled) {
             this.element.disabled = false;
             this.element.classList.remove('disabled');
-            this.element.onclick = this.method;
+            this.element.onclick = this._method;
         } else {
             this.element.disabled = true;
             this.element.classList.add('disabled');

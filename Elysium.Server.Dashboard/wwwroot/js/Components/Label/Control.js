@@ -1,22 +1,22 @@
 export class Control {
     constructor(element, enabled = true) {
         this.element = element;
-        this.enabled = enabled;
+        this._enabled = enabled;
         return this;
     }
     setState(state) {
-        this.enabled = state;
+        this._enabled = state;
         this.updateState();
     }
     setMethod(method) {
-        this.method = method;
+        this._method = method;
         this.updateState();
     }
     updateState() {
-        if (this.enabled) {
+        if (this._enabled) {
             this.element.disabled = false;
             this.element.classList.remove('disabled');
-            this.element.onclick = this.method;
+            this.element.onclick = this._method;
         }
         else {
             this.element.disabled = true;

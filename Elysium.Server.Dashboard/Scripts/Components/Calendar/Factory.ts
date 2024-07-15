@@ -69,6 +69,8 @@ export class Calendar
             
             if (dayDate === today) dayElement.classList.add('today');
             
+            
+            
             this.element.appendChild(dayElement);
             this.allDaysCache.push(dayElement);
         }
@@ -85,8 +87,9 @@ export class Calendar
     }
     
     private sortDaysByDate(): void {
-        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date > this.selectedDays[1].date)
+        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date > this.selectedDays[1].date) {
             [this.selectedDays[0], this.selectedDays[1]] = [this.selectedDays[1], this.selectedDays[0]];
+        }
     }
     
     private updateCycle(override?: number): void {

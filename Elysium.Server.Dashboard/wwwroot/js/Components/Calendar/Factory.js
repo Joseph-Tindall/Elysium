@@ -81,8 +81,9 @@ export class Calendar {
         this.allDaysCache = [];
     }
     sortDaysByDate() {
-        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date > this.selectedDays[1].date)
+        if ((this.selectedDays[0] && this.selectedDays[1]) && this.selectedDays[0].date > this.selectedDays[1].date) {
             [this.selectedDays[0], this.selectedDays[1]] = [this.selectedDays[1], this.selectedDays[0]];
+        }
     }
     updateCycle(override) {
         if (override != null) {
