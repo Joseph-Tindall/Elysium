@@ -5,6 +5,7 @@ import { shortMonths } from "../Calendar/Constants.js";
 import { EInteractions } from "../../Enumerations/EInteractions.js";
 import { LabelSideControls } from "../Label/LabelSideControls.js";
 import { Group } from "../../Elements/Group.js";
+import { Day } from "../Calendar/Day.js";
 
 export class DatePicker
 {
@@ -100,6 +101,17 @@ export class DatePicker
         this.calendar.resetCycle();
         this.calendar.highlightDayRange();
     }
+
+    private applySelection = (): Date[] => {
+        let selection: Date[] = [] as Date[];
+
+        this.calendar.selectedDays.forEach((selectedDay: Day): void => {
+            selection.push(selectedDay.date);
+        })
+
+        this.close();
+        return selection;
+    }
     
     private close = (): void => {
         this.label.leftControl.setMethod(null);
@@ -111,9 +123,5 @@ export class DatePicker
         (this.container as any) = null;
         (this.calendar as any) = null;
         (this.label as any) = null;
-    }
-    
-    private applySelection = (): void => {
-        this.close();
     }
 }

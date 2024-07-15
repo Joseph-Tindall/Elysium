@@ -33,6 +33,14 @@ export class DatePicker {
             this.calendar.resetCycle();
             this.calendar.highlightDayRange();
         };
+        this.applySelection = () => {
+            let selection = [];
+            this.calendar.selectedDays.forEach((selectedDay) => {
+                selection.push(selectedDay.date);
+            });
+            this.close();
+            return selection;
+        };
         this.close = () => {
             this.label.leftControl.setMethod(null);
             this.label.rightControl.setMethod(null);
@@ -41,9 +49,6 @@ export class DatePicker {
             this.container = null;
             this.calendar = null;
             this.label = null;
-        };
-        this.applySelection = () => {
-            this.close();
         };
         this.maximumDate = maximumDate;
         if (minimumDate)
