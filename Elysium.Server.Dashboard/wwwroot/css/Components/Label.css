@@ -11,6 +11,7 @@ label ~ button.control {
     
     border: 1px solid transparent;
     color: #AAA;
+    font-weight: bold;
     border-radius: 8px;
     width: var(--squared);
     height: var(--squared);
