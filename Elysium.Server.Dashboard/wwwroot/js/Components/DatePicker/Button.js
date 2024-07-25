@@ -1,6 +1,7 @@
 import { Dropdown } from "../Button/Dropdown.js";
 import { EQuickDates } from "../../Enumerations/EQuickDates.js";
 import { getLastDayOfMonth } from "../Calendar/Utilities.js";
+import { DatePicker } from "./Factory.js";
 export class DatePickerButton {
     constructor(button) {
         this.handleClickEvent = (event) => {
@@ -87,6 +88,7 @@ export class DatePickerButton {
             }
             default: {
                 this.labelElement.innerHTML = label;
+                const datePicker = new DatePicker();
                 this.dropdown.close();
                 return;
             }
